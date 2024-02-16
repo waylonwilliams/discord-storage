@@ -1,5 +1,22 @@
+import { useState } from "react";
+import Button from "./Button";
+import Files from "./Files";
+import Password from "./Password";
+
 function App() {
-  return <h1 className="hover:bg-green-50">Hello</h1>;
+  const [loggedIn, setLoggedIn] = useState<boolean>(true);
+
+  return (
+    <>
+      {loggedIn ? (
+        <>
+          <Button /> <Files />
+        </>
+      ) : (
+        <Password setLoggedIn={setLoggedIn} />
+      )}
+    </>
+  );
 }
 
 export default App;
