@@ -1,30 +1,33 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef } from "react";
 
 const Button: React.FC = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
+      console.log("Selected file: ", event.target.files[0]);
+      let formData = new FormData();
+      formData.append("file", event.target.files[0]); // by accessing index 0 i think this means only the first selected file would be uploaded
+
+      // upload file to backend
+      fetch("http://localhost:5000/upload", {
+        method: "PUT",
+        body: formData,
+      }).then((response) => {
+        console.log(response);
+      });
     }
   };
 
-  useEffect(() => {
-    if (selectedFile) {
-      console.log('Selected file:', selectedFile);
-    }
-  }, [selectedFile]);
-
   return (
     <>
-      <input 
-        type="file" 
-        onChange={handleFileChange} 
-        style={{ display: 'none' }} 
-        ref={fileInputRef} 
+      <input
+        type="file"
+        onChange={handleFileChange}
+        style={{ display: "none" }}
+        ref={fileInputRef}
       />
-      <button 
+      <button
         className="bg-green-300 hover:bg-green-400 text-white font-bold py-2 px-4 rounded-full"
         onClick={() => fileInputRef.current?.click()}
       >
