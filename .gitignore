@@ -41,7 +41,7 @@ front-end/*.local
 front-end/.vscode/*
 !front-end/.vscode/extensions.json
 front-end/.idea
-front-end.DS_Store
+.DS_Store
 front-end/*.suo
 front-end/*.ntvs*
 front-end/*.njsproj
