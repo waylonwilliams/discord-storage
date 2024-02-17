@@ -42,6 +42,8 @@ front-end/.vscode/*
 !front-end/.vscode/extensions.json
 front-end/.idea
 .DS_Store
+front-end/public/.DS_Store
+front-end/.DS_Store
 front-end/*.suo
 front-end/*.ntvs*
 front-end/*.njsproj
@@ -50,3 +52,4 @@ front-end/*.sw?
 
 back-end/node_modules
 back-end/dist
+back-end/.DS_Store
