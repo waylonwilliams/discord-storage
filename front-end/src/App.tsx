@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Button from "./Button";
+// import Button from "./Button";
 import Files from "./Files";
 import Password from "./Password";
+import ButtonTemp from "./ButtonTemp"
 
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(true);
@@ -10,7 +11,9 @@ function App() {
     <>
       {loggedIn ? (
         <>
-          <Button /> <Files />
+          {/* <Button /> */}
+          <ButtonTemp />
+          <Files />
         </>
       ) : (
         <Password setLoggedIn={setLoggedIn} />

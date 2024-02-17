@@ -15,7 +15,7 @@ export default function Files() {
       {example_files.map((file_name) => (
         // outer div to center in column, inner div is each file box
         <div className="flex justify-center">
-          <div className="bg-green-50 max-w-44 m-5">
+          <div className="bg-violet-300 max-w-44 m-5">
             <img src="/assets/file.png" />
             <div className="text-center">{file_name}</div>
           </div>
