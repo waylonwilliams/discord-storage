@@ -14,7 +14,9 @@ app.put("/upload", (req: Request, res: Response) => {
       ? req.files.file[0]
       : req.files.file;
     console.log(file);
-    file.mv(path.join(uploadedPath, file.name));
+    // right here file is the uploaded file
+    // read and cut and move to discord
+    // file.mv(path.join(uploadedPath, file.name));
     res.status(200).json({ message: "File uploaded successfully" });
   }
 });
