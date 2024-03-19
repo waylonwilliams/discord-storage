@@ -30,6 +30,23 @@ app.put("/upload", async (req: Request, res: Response) => {
     const filePath: string = path.join(uploadedPath, file.name);
     await file.mv(filePath); // files are in uploaded directory
 
+    fs.readFile(filePath, "utf8", (err, data) => {
+      if (err) {
+        console.error("Error reading file:", err);
+      }
+      for (let i = 0; i < file.size; i += 20) {
+        fs.writeFile(
+          path.join(uploadedPath, file.name + i.toString()),
+          data.slice(i, i + 20),
+          (err) => {
+            if (err) {
+              console.error("Error splicing file:", err);
+            }
+          }
+        );
+      }
+    });
+
     // upload to discord
     const channel = (await client.channels.fetch(channelID)) as TextChannel;
     if (!channel) {
@@ -63,6 +80,8 @@ app.put("/upload", async (req: Request, res: Response) => {
       });
   }
 });
+
+app.get("/upload", async (req: Request, res: Response) => {});
 
 app.listen(5000, () => {
   console.log(`Server is running on http://localhost:5000`);

@@ -8,4 +8,4 @@ RUN npm install -g typescript
 RUN npm install
 RUN tsc
 
-CMD ["node", "dist/App.js"]
+CMD ["node", "dist/App.js"] 
