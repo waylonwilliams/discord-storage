@@ -1,6 +1,10 @@
 import React, { useRef } from "react";
 
-const Button: React.FC = () => {
+interface Props {
+  setFiles: (val: any) => void;
+}
+
+const Button: React.FC<Props> = ({ setFiles }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,10 +20,16 @@ const Button: React.FC = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.messageData);
-          for (let i = 0; i < data.messageData.length; i++) {
-            console.log(data.messageData[i]);
+          let fileName = data.fileName;
+          // change file name if there are duplicates
+          for (let i = 1; localStorage.getItem(data.fileName) != null; i++) {
+            if (i == 1) {
+              fileName += " " + i.toString();
+            } else {
+              fileName = fileName.slice(0, fileName.length - 1) + i.toString();
+            }
           }
+          localStorage.setItem(fileName, data.messageIDs);
         });
     }
   };

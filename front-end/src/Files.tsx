@@ -1,4 +1,8 @@
-export default function Files() {
+interface Props {
+  files: Object;
+}
+
+export default function Files({ files }: Props) {
   const example_files = [
     "File 1",
     "File 2",

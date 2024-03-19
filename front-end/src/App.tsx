@@ -1,21 +1,14 @@
-import { useState } from "react";
 import Files from "./Files";
-import Password from "./Password";
-import Button from "./Button"
+import Button from "./Button";
+import { useState } from "react";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(true);
+  const [files, setFiles] = useState({ ...localStorage });
 
   return (
     <>
-      {loggedIn ? (
-        <>
-          <Button />
-          <Files />
-        </>
-      ) : (
-        <Password setLoggedIn={setLoggedIn} />
-      )}
+      <Button setFiles={setFiles} />
+      <Files files={files} />
     </>
   );
 }
