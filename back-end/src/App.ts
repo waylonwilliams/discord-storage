@@ -43,7 +43,7 @@ app.put("/upload", async (req: Request, res: Response) => {
       return res.status(500).json({ message: "Invalid channel ID" });
     }
 
-    splicedFilePaths.forEach(async (p, index) => {
+    const uploadPromises = splicedFilePaths.map(async (p, index) => {
       await uploadToDiscord(p, file.name + index.toString(), channel)
         .then(() => {
           fs.unlink(p, (e) => {
@@ -59,6 +59,8 @@ app.put("/upload", async (req: Request, res: Response) => {
           }
         });
     });
+    await Promise.all(uploadPromises);
+
     fs.unlink(filePath, (e) => {
       if (e) {
         console.error("Error deleting main file", e);
