@@ -13,9 +13,14 @@ const Button: React.FC = () => {
       fetch("http://localhost:5000/upload", {
         method: "PUT",
         body: formData,
-      }).then((response) => {
-        console.log(response);
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.messageData);
+          for (let i = 0; i < data.messageData.length; i++) {
+            console.log(data.messageData[i]);
+          }
+        });
     }
   };
 

@@ -1,11 +1,11 @@
-import { TextChannel } from "discord.js";
+import { Message, TextChannel } from "discord.js";
 
 export async function uploadToDiscord(
   attachmentPath: string,
   fileName: string, // should include the postfix index
   channel: TextChannel
 ) {
-  return new Promise<void>(async (resolve, reject) => {
+  return new Promise<string | undefined>(async (resolve, reject) => {
     const attachment = {
       files: [
         {
@@ -21,9 +21,9 @@ export async function uploadToDiscord(
         reject(e);
         return;
       })
-      .then(() => {
-        console.log("Sent to discord");
-        resolve();
+      .then((message) => {
+        const messageInfo = message?.id;
+        resolve(messageInfo);
         return;
       });
   });
