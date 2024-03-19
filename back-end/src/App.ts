@@ -30,20 +30,22 @@ app.put("/upload", async (req: Request, res: Response) => {
     const filePath: string = path.join(uploadedPath, file.name);
     await file.mv(filePath); // files are in uploaded directory
 
+    let splicedFilePaths: string[] = [];
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
         console.error("Error reading file:", err);
       }
       for (let i = 0; i < file.size; i += 20) {
-        fs.writeFile(
-          path.join(uploadedPath, file.name + i.toString()),
-          data.slice(i, i + 20),
-          (err) => {
-            if (err) {
-              console.error("Error splicing file:", err);
-            }
-          }
+        const curPath: string = path.join(
+          uploadedPath,
+          file.name + i.toString()
         );
+        fs.writeFile(curPath, data.slice(i, i + 20), (err) => {
+          if (err) {
+            console.error("Error splicing file:", err);
+          }
+        });
+        splicedFilePaths.push(curPath);
       }
     });
 
@@ -53,31 +55,37 @@ app.put("/upload", async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Invalid channel ID" });
     }
 
-    // update this to handle multiple files
-    const attachment = {
-      files: [
-        {
-          attachment: filePath,
-          name: file.name,
-        },
-      ],
-    };
-
-    channel
-      .send(attachment)
-      .then(() => {
-        fs.unlink(filePath, (e) => {
-          if (e) {
-            console.error("Error deleting file", e);
-          }
+    splicedFilePaths.forEach((p, index) => {
+      const attachment = {
+        files: [
+          {
+            attachment: p,
+            name: file.name + index.toString(),
+          },
+        ],
+      };
+      channel
+        .send(attachment)
+        .then(() => {
+          fs.unlink(p, (e) => {
+            if (e) {
+              console.error("Error deleting file", e);
+            }
+          });
+          console.log("Deleted spliced file properly");
+        })
+        .catch((e) => {
+          console.error("Error uploading file:", e);
+          res.status(500).json({ message: "Error uploading file" });
         });
-        console.log("Uploaded and deleted successfully");
-        res.status(200).json({ message: "File uploaded successfully" });
-      })
-      .catch((e) => {
-        console.error("Error uploading file:", e);
-        res.status(500).json({ message: "Error uploading file" });
-      });
+    });
+    fs.unlink(filePath, (e) => {
+      if (e) {
+        console.error("Error deleting file", e);
+      }
+    });
+    console.log("Uploaded and deleted successfully");
+    res.status(200).json({ message: "File uploaded successfully" });
   }
 });
 
