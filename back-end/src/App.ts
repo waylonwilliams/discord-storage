@@ -5,6 +5,7 @@ import * as path from "path";
 import { Client, TextChannel } from "discord.js";
 import * as fs from "fs";
 import { channelID, token } from "./Login";
+import { spliceFiles } from "./File";
 
 const uploadedPath = path.join(__dirname, "../uploaded");
 const app = express();
@@ -26,28 +27,35 @@ app.put("/upload", async (req: Request, res: Response) => {
     const file: UploadedFile | UploadedFile[] = Array.isArray(req.files.file)
       ? req.files.file[0]
       : req.files.file;
-    console.log(file);
     const filePath: string = path.join(uploadedPath, file.name);
     await file.mv(filePath); // files are in uploaded directory
 
-    let splicedFilePaths: string[] = [];
-    fs.readFile(filePath, "utf8", (err, data) => {
-      if (err) {
-        console.error("Error reading file:", err);
-      }
-      for (let i = 0; i < file.size; i += 20) {
-        const curPath: string = path.join(
-          uploadedPath,
-          file.name + i.toString()
-        );
-        fs.writeFile(curPath, data.slice(i, i + 20), (err) => {
-          if (err) {
-            console.error("Error splicing file:", err);
-          }
-        });
-        splicedFilePaths.push(curPath);
-      }
-    });
+    const splicedFilePaths: string[] = await spliceFiles(
+      filePath,
+      uploadedPath,
+      file.name,
+      file.size
+    );
+    console.log("Back:", splicedFilePaths);
+    // let splicedFilePaths: string[] = [];
+    // fs.readFile(filePath, "utf8", async (err, data) => {
+    //   if (err) {
+    //     console.error("Error reading file:", err);
+    //   }
+    //   for (let i = 0; i < file.size; i += 24000000) {
+    //     const curPath: string = await path.join(
+    //       uploadedPath,
+    //       file.name + i.toString()
+    //     );
+    //     fs.writeFile(curPath, data.slice(i, i + 24000000), (err) => {
+    //       if (err) {
+    //         console.error("Error splicing file:", err);
+    //       }
+    //     });
+    //     splicedFilePaths.push(curPath);
+    //   }
+    // });
+    // console.log(splicedFilePaths);
 
     // upload to discord
     const channel = (await client.channels.fetch(channelID)) as TextChannel;
@@ -55,7 +63,7 @@ app.put("/upload", async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Invalid channel ID" });
     }
 
-    splicedFilePaths.forEach((p, index) => {
+    splicedFilePaths.forEach(async (p, index) => {
       const attachment = {
         files: [
           {
@@ -64,10 +72,12 @@ app.put("/upload", async (req: Request, res: Response) => {
           },
         ],
       };
-      channel
+      console.log("Before querying api");
+      await channel
         .send(attachment)
-        .then(() => {
-          fs.unlink(p, (e) => {
+        .then(async () => {
+          console.log(".then query api");
+          await fs.unlink(p, (e) => {
             if (e) {
               console.error("Error deleting file", e);
             }
