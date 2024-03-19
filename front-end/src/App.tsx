@@ -3,7 +3,15 @@ import Button from "./Button";
 import { useState } from "react";
 
 function App() {
-  const [files, setFiles] = useState({ ...localStorage });
+  let tempFilesArr = [];
+  const ls = { ...localStorage }; // { file: csv of ids }
+  for (const key in ls) {
+    tempFilesArr.push({
+      file: key,
+      ids: ls[key],
+    });
+  }
+  const [files, setFiles] = useState(tempFilesArr); // [ {file: fileName, ids: csv of message ids} ]
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 
 interface Props {
-  setFiles: (val: any) => void;
+  setFiles: any;
 }
 
 const Button: React.FC<Props> = ({ setFiles }: Props) => {

@@ -1,5 +1,5 @@
 interface Props {
-  files: Object;
+  files: any;
 }
 
 export default function Files({ files }: Props) {
