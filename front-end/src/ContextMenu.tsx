@@ -5,7 +5,22 @@ interface Props {
 }
 
 export default function ContextMenu({ x, y, rightClickedFile }: Props) {
-  function onDownloadClick() {}
+  function onDownloadClick() {
+    fetch("http://localhost:5000/download", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fileName: rightClickedFile,
+        ids: localStorage.getItem(rightClickedFile),
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
 
   function onMoveClick() {}
 

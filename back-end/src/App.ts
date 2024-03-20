@@ -12,6 +12,7 @@ const uploadedPath = path.join(__dirname, "../uploaded");
 const app = express();
 app.use(cors());
 app.use(fileUpload());
+app.use(express.json());
 
 // init discord client
 const client = new Client({
@@ -75,8 +76,11 @@ app.put("/upload", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/download", async (req: Request, res: Response) => {
-  console.log("Hello");
+app.post("/download", async (req: Request, res: Response) => {
+  console.log(req.body.fileName);
+  const ids = req.body.ids.split(",");
+  console.log(ids);
+
   res.status(200).json({ file: "Somehow return a file here " });
 });
 
