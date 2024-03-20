@@ -82,7 +82,7 @@ app.post("/download", async (req: Request, res: Response) => {
   console.log(messageIDS);
 
   const downloadPromises = messageIDS.map(async (id: string, index: number) => {
-    await downloadFromDiscord(id, channelID);
+    await downloadFromDiscord(id, channelID, uploadedPath);
   });
   await Promise.all(downloadPromises);
 

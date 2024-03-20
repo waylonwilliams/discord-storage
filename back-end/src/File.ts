@@ -43,3 +43,10 @@ async function writeFilePromise(curPath: string, data: Buffer, index: number) {
     });
   });
 }
+
+export async function writeFromDownload(
+  response: Response,
+  uploadedPath: string
+): Promise<void> {
+  return new Promise<void>((resolve, reject) => {});
+}

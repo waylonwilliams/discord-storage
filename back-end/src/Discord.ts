@@ -1,5 +1,6 @@
 import { Attachment, Message, TextChannel } from "discord.js";
 import { token } from "./Login";
+import { createWriteStream } from "fs";
 
 export async function uploadToDiscord(
   attachmentPath: string,
@@ -32,9 +33,10 @@ export async function uploadToDiscord(
 
 export async function downloadFromDiscord(
   messageID: string,
-  channelID: string
+  channelID: string,
+  uploadedPath: string
 ) {
-  return new Promise<string>(async (resolve, reject) => {
+  return new Promise<void>(async (resolve, reject) => {
     console.log(messageID, channelID);
     const response = await fetch(
       `https://discord.com/api/v10/channels/${channelID}/messages/${messageID}`,
@@ -46,10 +48,12 @@ export async function downloadFromDiscord(
     );
     const message: Message = await response.json();
     if (message.attachments) {
-      message.attachments.forEach((attachment: Attachment, key: string) => {
-        console.log(`${key}: ${attachment.name} - ${attachment.url}`);
-      });
+      message.attachments.forEach(
+        async (attachment: Attachment, key: string) => {
+          console.log(attachment.url);
+          // fetch the attachment and move it to file system for surgery later
+        }
+      );
     }
-    resolve("file name");
   });
 }
