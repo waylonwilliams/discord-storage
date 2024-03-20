@@ -31,12 +31,6 @@ const Button: React.FC<Props> = ({ setFiles, files }: Props) => {
                 fileName.slice(0, fileName.length - 2) + i.toString() + ")";
             }
           }
-          console.log("File uploaded, adding to local storage and state array");
-          console.log("Old files:", files);
-          console.log("New files:", [
-            ...files,
-            { file: fileName, ids: data.messageIDs },
-          ]);
           localStorage.setItem(fileName, data.messageIDs);
           setFiles([...files, { file: fileName, ids: data.messageIDs }]);
         });
