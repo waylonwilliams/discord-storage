@@ -24,7 +24,7 @@ export default function Files({ files }: Props) {
 
   return (
     <>
-      <div className="static grid grid-cols-6">
+      <div className="grid grid-cols-6">
         {files.map((file: fileArrayElement, index) => (
           // outer div to center in column, inner div is each file box
           <div
