@@ -75,7 +75,10 @@ app.put("/upload", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/download", async (req: Request, res: Response) => {});
+app.get("/download", async (req: Request, res: Response) => {
+  console.log("Hello");
+  res.status(200).json({ file: "Somehow return a file here " });
+});
 
 app.listen(5000, () => {
   console.log(`Server is running on http://localhost:5000`);
