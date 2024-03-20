@@ -12,6 +12,8 @@ export default function Files({ files }: Props) {
     x: 0,
     y: 0,
   });
+
+  // cleanly add click off listener
   useEffect(() => {
     const handleClick = () => setRightClicked(false);
     document.addEventListener("click", handleClick);
