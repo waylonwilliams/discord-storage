@@ -2,11 +2,11 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import fileUpload, { FileArray, UploadedFile } from "express-fileupload";
 import * as path from "path";
-import { Client, TextChannel } from "discord.js";
+import { Client, Message, TextChannel } from "discord.js";
 import * as fs from "fs";
 import { channelID, token } from "./Login";
 import { spliceFiles } from "./File";
-import { uploadToDiscord } from "./Discord";
+import { downloadFromDiscord, uploadToDiscord } from "./Discord";
 
 const uploadedPath = path.join(__dirname, "../uploaded");
 const app = express();
@@ -78,8 +78,13 @@ app.put("/upload", async (req: Request, res: Response) => {
 
 app.post("/download", async (req: Request, res: Response) => {
   console.log(req.body.fileName);
-  const ids = req.body.ids.split(",");
-  console.log(ids);
+  const messageIDS = req.body.ids.split(",");
+  console.log(messageIDS);
+
+  const downloadPromises = messageIDS.map(async (id: string, index: number) => {
+    await downloadFromDiscord(id, channelID);
+  });
+  await Promise.all(downloadPromises);
 
   res.status(200).json({ file: "Somehow return a file here " });
 });

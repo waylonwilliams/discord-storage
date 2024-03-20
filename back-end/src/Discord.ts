@@ -1,4 +1,5 @@
-import { Message, TextChannel } from "discord.js";
+import { Attachment, Message, TextChannel } from "discord.js";
+import { token } from "./Login";
 
 export async function uploadToDiscord(
   attachmentPath: string,
@@ -26,5 +27,29 @@ export async function uploadToDiscord(
         resolve(messageInfo);
         return;
       });
+  });
+}
+
+export async function downloadFromDiscord(
+  messageID: string,
+  channelID: string
+) {
+  return new Promise<string>(async (resolve, reject) => {
+    console.log(messageID, channelID);
+    const response = await fetch(
+      `https://discord.com/api/v10/channels/${channelID}/messages/${messageID}`,
+      {
+        headers: {
+          Authorization: `Bot ${token}`,
+        },
+      }
+    );
+    const message: Message = await response.json();
+    if (message.attachments) {
+      message.attachments.forEach((attachment: Attachment, key: string) => {
+        console.log(`${key}: ${attachment.name} - ${attachment.url}`);
+      });
+    }
+    resolve("file name");
   });
 }
