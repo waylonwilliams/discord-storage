@@ -12,7 +12,6 @@ function App() {
       ids: ls[key],
     });
   }
-  console.log(tempFilesArr);
   const [files, setFiles] = useState<fileArrayElement[]>(tempFilesArr); // [ {file: fileName, ids: csv of message ids} ]
 
   return (
