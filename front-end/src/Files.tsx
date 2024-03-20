@@ -12,6 +12,7 @@ export default function Files({ files }: Props) {
     x: 0,
     y: 0,
   });
+  const [rightClickedFile, setRightClickedFile] = useState<string>("");
 
   // cleanly add click off listener
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function Files({ files }: Props) {
                 x: e.pageX,
                 y: e.pageY,
               });
+              setRightClickedFile(file.file);
               setRightClicked(true);
             }}
             key={index}
@@ -47,7 +49,11 @@ export default function Files({ files }: Props) {
           </div>
         ))}
         {rightClicked && (
-          <ContextMenu x={contextMenuPoints.x} y={contextMenuPoints.y} />
+          <ContextMenu
+            x={contextMenuPoints.x}
+            y={contextMenuPoints.y}
+            rightClickedFile={rightClickedFile}
+          />
         )}
       </div>
     </>

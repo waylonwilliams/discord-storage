@@ -1,6 +1,10 @@
-import { location } from "./Props";
+interface Props {
+  x: number;
+  y: number;
+  rightClickedFile: string;
+}
 
-export default function ContextMenu({ x, y }: location) {
+export default function ContextMenu({ x, y, rightClickedFile }: Props) {
   function onDownloadClick() {}
 
   function onMoveClick() {}
@@ -14,6 +18,7 @@ export default function ContextMenu({ x, y }: location) {
       className={`bg-gray-700 absolute`}
       style={{ top: `${y + 12}px`, left: `${x + 5}px` }}
     >
+      {rightClickedFile}
       <div className="p-2 hover:bg-gray-400" onClick={onDownloadClick}>
         Download
       </div>
