@@ -70,6 +70,7 @@ app.put("/upload", async (req: Request, res: Response) => {
         console.error("Error deleting main file", e);
       }
     });
+    console.log("Uploaded and sending response");
     res.status(200).json({ messageIDs: messageData, fileName: file.name });
   }
 });

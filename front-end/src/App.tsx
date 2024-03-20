@@ -1,6 +1,7 @@
 import Files from "./Files";
 import Button from "./Button";
 import { useState } from "react";
+import { fileArrayElement } from "./Props.ts";
 
 function App() {
   let tempFilesArr = [];
@@ -11,11 +12,12 @@ function App() {
       ids: ls[key],
     });
   }
-  const [files, setFiles] = useState(tempFilesArr); // [ {file: fileName, ids: csv of message ids} ]
+  console.log(tempFilesArr);
+  const [files, setFiles] = useState<fileArrayElement[]>(tempFilesArr); // [ {file: fileName, ids: csv of message ids} ]
 
   return (
     <>
-      <Button setFiles={setFiles} />
+      <Button setFiles={setFiles} files={files} />
       <Files files={files} />
     </>
   );
