@@ -15,11 +15,11 @@ export async function spliceFiles(
         reject(err);
         return;
       }
-      for (let i = 0; i < fileSize; i += 23310000) {
+      for (let i = 0; i < fileSize; i += 25690112) {
         const curPath: string = path.join(uploadedPath, i.toString());
         await writeFilePromise(curPath, data, i);
         splicedFilePaths.push(curPath);
-        if (i + 23310000 > fileSize) {
+        if (i + 25690112 > fileSize) {
           resolve(splicedFilePaths);
         }
       }
@@ -29,7 +29,7 @@ export async function spliceFiles(
 
 async function writeFilePromise(curPath: string, data: Buffer, index: number) {
   return new Promise<void>((resolve, reject) => {
-    fs.writeFile(curPath, data.slice(index, index + 23310000), (err) => {
+    fs.writeFile(curPath, data.slice(index, index + 25690112), (err) => {
       // slice is deprecated?
       if (err) {
         console.error("Error splicing file:", err);
