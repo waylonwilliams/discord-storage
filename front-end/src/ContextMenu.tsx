@@ -21,11 +21,12 @@ export default function ContextMenu({ x, y, rightClickedFile }: Props) {
         const url = window.URL.createObjectURL(data);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "downloaded_file.jpg";
+        a.download = rightClickedFile; // Fix file names, move the number to before the postfix
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
+        // id like to make it prompt with a save as but maybe not, if file is slow to download ig it makes sense not to
       });
   }
 
