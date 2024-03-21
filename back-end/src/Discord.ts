@@ -58,16 +58,8 @@ export async function downloadFromDiscord(
             url: attachment.url,
             responseType: "stream",
           }).then(function (response) {
-            const writer = createWriteStream(
-              path.join(uploadedPath, "help.pdf")
-            );
-            console.log(
-              attachment.name,
-              attachment.description,
-              attachment.id,
-              attachment.proxyURL,
-              attachment.url
-            );
+            const writer = createWriteStream(path.join(uploadedPath, "help"));
+            console.log(attachment.url); // need to extract which file it is from the url, ill rename the files so the order is obvious
             response.data.pipe(writer);
 
             writer.on("finish", () => {
