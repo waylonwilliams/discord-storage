@@ -89,7 +89,7 @@ app.post("/download", async (req: Request, res: Response) => {
     );
   });
   await Promise.all(downloadPromises);
-  console.log("All downloaded");
+  console.log("All downloaded", downloadPromises.length);
 
   res.status(200).json({ file: "Somehow return a file here " });
 });

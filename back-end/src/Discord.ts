@@ -46,7 +46,7 @@ export async function downloadFromDiscord(
           Authorization: `Bot ${token}`,
         },
       }
-    ).catch((e) => console.log("Error fetching", e));
+    ).catch((e) => console.error("Error fetching", e));
     if (response === null) {
       console.error("Response is null");
       reject();
@@ -54,11 +54,10 @@ export async function downloadFromDiscord(
     }
     const message: Message = await response
       ?.json()
-      .catch((e) => console.log("Error parsing json", e));
+      .catch((e) => console.error("Error parsing json", e));
     if (message.attachments) {
       message.attachments.forEach(
         async (attachment: Attachment, key: string) => {
-          console.log(attachment.url);
           axios({
             method: "get",
             url: attachment.url,
@@ -66,24 +65,30 @@ export async function downloadFromDiscord(
           })
             .then(function (response) {
               // parsing attachment string for file name
-              const startIndex = attachment.url.lastIndexOf("/") + 1;
-              const endIndex = attachment.url.indexOf("?");
-              const f = attachment.url.substring(startIndex, endIndex);
-              console.log(f);
+              try {
+                const startIndex = attachment.url.lastIndexOf("/") + 1;
+                const endIndex = attachment.url.indexOf("?");
+                const f = attachment.url.substring(startIndex, endIndex);
 
-              const writer = createWriteStream(path.join(uploadedPath, f));
-              response.data.pipe(writer);
+                const writer = createWriteStream(path.join(uploadedPath, f));
+                response.data.pipe(writer);
 
-              writer.on("finish", () => {
-                console.log("File downloaded successfully");
-                resolve();
+                writer.on("finish", () => {
+                  console.log("File downloaded successfully");
+                  resolve();
+                  return;
+                });
+              } catch (e) {
+                console.error("Error when piping file", e);
+                reject();
                 return;
-              });
+              }
             })
             .catch((e) => console.error("Error fetching", e));
         }
       );
     } else {
+      console.error("No attachment found");
       reject();
     }
   });
