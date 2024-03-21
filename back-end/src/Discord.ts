@@ -1,6 +1,7 @@
 import { Attachment, Message, TextChannel } from "discord.js";
 import { token } from "./Login";
 import { createWriteStream } from "fs";
+import path from "path";
 
 export async function uploadToDiscord(
   attachmentPath: string,
@@ -51,7 +52,28 @@ export async function downloadFromDiscord(
       message.attachments.forEach(
         async (attachment: Attachment, key: string) => {
           console.log(attachment.url);
-          // fetch the attachment and move it to file system for surgery later
+          const a = await fetch(attachment.url).then((data) => {
+            const writable = createWriteStream(
+              path.join(uploadedPath, "/help")
+            );
+            const reader = data.body?.getReader();
+
+            // recursive function to get all of the data from the buffer
+            const pump: any = async () => {
+              return reader?.read().then(({ value, done }) => {
+                if (done) {
+                  writable.end();
+                  console.log("File downloaded successfully");
+                  return;
+                }
+                const buffer = Buffer.from(value);
+                writable.write(buffer);
+                return pump();
+              });
+            };
+
+            return pump();
+          });
         }
       );
     }
