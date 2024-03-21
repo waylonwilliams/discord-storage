@@ -39,7 +39,6 @@ export async function downloadFromDiscord(
   uploadedPath: string
 ) {
   return new Promise<void>(async (resolve, reject) => {
-    console.log(messageID, channelID);
     const response = await fetch(
       `https://discord.com/api/v10/channels/${channelID}/messages/${messageID}`,
       {
@@ -47,8 +46,15 @@ export async function downloadFromDiscord(
           Authorization: `Bot ${token}`,
         },
       }
-    );
-    const message: Message = await response.json();
+    ).catch((e) => console.log("Error fetching", e));
+    if (response === null) {
+      console.error("Response is null");
+      reject();
+      return;
+    }
+    const message: Message = await response
+      ?.json()
+      .catch((e) => console.log("Error parsing json", e));
     if (message.attachments) {
       message.attachments.forEach(
         async (attachment: Attachment, key: string) => {
@@ -57,17 +63,24 @@ export async function downloadFromDiscord(
             method: "get",
             url: attachment.url,
             responseType: "stream",
-          }).then(function (response) {
-            const writer = createWriteStream(path.join(uploadedPath, "help"));
-            console.log(attachment.url); // need to extract which file it is from the url, ill rename the files so the order is obvious
-            response.data.pipe(writer);
+          })
+            .then(function (response) {
+              // parsing attachment string for file name
+              const startIndex = attachment.url.lastIndexOf("/") + 1;
+              const endIndex = attachment.url.indexOf("?");
+              const f = attachment.url.substring(startIndex, endIndex);
+              console.log(f);
 
-            writer.on("finish", () => {
-              console.log("File downloaded successfully");
-              resolve();
-              return;
-            });
-          });
+              const writer = createWriteStream(path.join(uploadedPath, f));
+              response.data.pipe(writer);
+
+              writer.on("finish", () => {
+                console.log("File downloaded successfully");
+                resolve();
+                return;
+              });
+            })
+            .catch((e) => console.error("Error fetching", e));
         }
       );
     } else {

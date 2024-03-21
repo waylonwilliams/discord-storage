@@ -49,7 +49,7 @@ app.put("/upload", async (req: Request, res: Response) => {
 
     let messageData: string[] = [];
     const uploadPromises = splicedFilePaths.map(async (p, index) => {
-      await uploadToDiscord(p, file.name + index.toString(), channel)
+      await uploadToDiscord(p, index.toString(), channel)
         .then((messageInfo) => {
           if (messageInfo != null) {
             messageData.push(messageInfo);
@@ -82,12 +82,14 @@ app.put("/upload", async (req: Request, res: Response) => {
 app.post("/download", async (req: Request, res: Response) => {
   console.log(req.body.fileName);
   const messageIDS = req.body.ids.split(",");
-  console.log(messageIDS);
 
   const downloadPromises = messageIDS.map(async (id: string, index: number) => {
-    await downloadFromDiscord(id, channelID, uploadedPath);
+    await downloadFromDiscord(id, channelID, uploadedPath).catch((e) =>
+      console.error("Error with my discord download function", e)
+    );
   });
   await Promise.all(downloadPromises);
+  console.log("All downloaded");
 
   res.status(200).json({ file: "Somehow return a file here " });
 });

@@ -16,10 +16,8 @@ export async function spliceFiles(
         return;
       }
       for (let i = 0; i < fileSize; i += 12950000) {
-        const curPath: string = path.join(
-          uploadedPath,
-          i.toString() + fileName
-        );
+        const curPath: string = path.join(uploadedPath, i.toString());
+        console.log("Curpath:", curPath);
         await writeFilePromise(curPath, data, i);
         splicedFilePaths.push(curPath);
         if (i + 12950000 > fileSize) {
