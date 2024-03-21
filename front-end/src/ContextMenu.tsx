@@ -18,7 +18,7 @@ export default function ContextMenu({ x, y, rightClickedFile }: Props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log("returned:", data);
       });
   }
 

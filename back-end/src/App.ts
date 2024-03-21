@@ -7,12 +7,15 @@ import * as fs from "fs";
 import { channelID, token } from "./Login";
 import { spliceFiles } from "./File";
 import { downloadFromDiscord, uploadToDiscord } from "./Discord";
+import livereload from "connect-livereload";
 
 const uploadedPath = path.join(__dirname, "../uploaded");
 const app = express();
 app.use(cors());
 app.use(fileUpload());
 app.use(express.json());
+app.use(livereload({ ignore: [".pdf"] }));
+// app.use("/pdf", express.static(path.join(config.root, "content/files")));
 
 // init discord client
 const client = new Client({

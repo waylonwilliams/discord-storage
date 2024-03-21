@@ -2,6 +2,7 @@ import { Attachment, Message, TextChannel } from "discord.js";
 import { token } from "./Login";
 import { createWriteStream } from "fs";
 import path from "path";
+import axios from "axios";
 
 export async function uploadToDiscord(
   attachmentPath: string,
@@ -52,30 +53,33 @@ export async function downloadFromDiscord(
       message.attachments.forEach(
         async (attachment: Attachment, key: string) => {
           console.log(attachment.url);
-          const a = await fetch(attachment.url).then((data) => {
-            const writable = createWriteStream(
-              path.join(uploadedPath, "/help")
+          axios({
+            method: "get",
+            url: attachment.url,
+            responseType: "stream",
+          }).then(function (response) {
+            const writer = createWriteStream(
+              path.join(uploadedPath, "help.pdf")
             );
-            const reader = data.body?.getReader();
+            console.log(
+              attachment.name,
+              attachment.description,
+              attachment.id,
+              attachment.proxyURL,
+              attachment.url
+            );
+            response.data.pipe(writer);
 
-            // recursive function to get all of the data from the buffer
-            const pump: any = async () => {
-              return reader?.read().then(({ value, done }) => {
-                if (done) {
-                  writable.end();
-                  console.log("File downloaded successfully");
-                  return;
-                }
-                const buffer = Buffer.from(value);
-                writable.write(buffer);
-                return pump();
-              });
-            };
-
-            return pump();
+            writer.on("finish", () => {
+              console.log("File downloaded successfully");
+              resolve();
+              return;
+            });
           });
         }
       );
+    } else {
+      reject();
     }
   });
 }
