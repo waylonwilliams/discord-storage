@@ -1,11 +1,10 @@
-FROM node:14
+FROM node:18
 
 WORKDIR /bot
 
 COPY . /bot
 
-RUN npm install -g typescript
+# RUN npm install -g typescript
 RUN npm install
-RUN tsc
 
-CMD ["node", "dist/App.js"] 
+CMD ["npm", "run", "start"] 

@@ -16,9 +16,16 @@ export default function ContextMenu({ x, y, rightClickedFile }: Props) {
         ids: localStorage.getItem(rightClickedFile),
       }),
     })
-      .then((response) => response.json())
+      .then((response) => response.blob())
       .then((data) => {
-        console.log("returned:", data);
+        const url = window.URL.createObjectURL(data);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "downloaded_file.jpg";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
       });
   }
 

@@ -91,7 +91,7 @@ app.post("/download", async (req: Request, res: Response) => {
   await Promise.all(downloadPromises);
   console.log("All downloaded", downloadPromises.length);
 
-  res.status(200).json({ file: "Somehow return a file here " });
+  res.status(200).sendFile(path.join(uploadedPath, "0"));
 });
 
 app.listen(5000, () => {
