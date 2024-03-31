@@ -91,12 +91,13 @@ app.post("/download", async (req: Request, res: Response) => {
   await Promise.all(downloadPromises);
   console.log("All downloaded", downloadPromises.length);
 
-  await combineFiles(req.body.fileName, uploadedPath);
+  const writePath = await combineFiles(req.body.fileName, uploadedPath);
   // loop through downloads by number and compile into one file
   // rename the file to req.body.fileName
   // return the new file
+  console.log(writePath);
 
-  res.status(200).sendFile(path.join(uploadedPath, req.body.fileName));
+  res.status(200).sendFile(writePath);
 });
 
 app.listen(5000, () => {

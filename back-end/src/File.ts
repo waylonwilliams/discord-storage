@@ -52,15 +52,17 @@ export async function combineFiles(fileName: string, uploadedPath: string) {
 
   // make sure appending will go smooth
   const writePath = path.join(uploadedPath, fileName);
-  const createPromise = await createEmptyFile(writePath);
-  await Promise.all([createPromise]);
+  await createEmptyFile(writePath);
 
-  const appendPromises = fileNames.map(async (fileName: string) => {
-    await readIntoAppend(writePath, fileName);
-  });
-  await Promise.all(appendPromises);
+  for (const f of fileNames) {
+    await readIntoAppend(f, writePath);
+  }
+  // const appendPromises = fileNames.map(async (fileName: string) => {
+  //   await readIntoAppend(fileName, writePath);
+  // });
+  // await Promise.all(appendPromises);
 
-  console.log("All appended");
+  return writePath;
 }
 
 function checkFileExists(filePath: string) {
@@ -86,6 +88,7 @@ async function readIntoAppend(sourcePath: string, destinationPath: string) {
       console.log("Reading file");
 
       await appendFilePromise(destinationPath, data);
+      resolve();
     });
   });
 }
