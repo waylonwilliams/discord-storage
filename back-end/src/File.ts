@@ -40,3 +40,80 @@ async function writeFilePromise(curPath: string, data: Buffer, index: number) {
     });
   });
 }
+
+export async function combineFiles(fileName: string, uploadedPath: string) {
+  let numFiles = 0;
+  let fileNames: string[] = [];
+  while (await checkFileExists(path.join(uploadedPath, numFiles.toString()))) {
+    fileNames.push(path.join(uploadedPath, numFiles.toString()));
+    numFiles++;
+  }
+  console.log("Number of files:", numFiles, fileNames);
+
+  // make sure appending will go smooth
+  const writePath = path.join(uploadedPath, fileName);
+  const createPromise = await createEmptyFile(writePath);
+  await Promise.all([createPromise]);
+
+  const appendPromises = fileNames.map(async (fileName: string) => {
+    await readIntoAppend(writePath, fileName);
+  });
+  await Promise.all(appendPromises);
+
+  console.log("All appended");
+}
+
+function checkFileExists(filePath: string) {
+  return new Promise((resolve) => {
+    fs.stat(filePath, (err) => {
+      if (err) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+}
+
+async function readIntoAppend(sourcePath: string, destinationPath: string) {
+  return new Promise<void>((resolve, reject) => {
+    fs.readFile(sourcePath, null, async (err, data) => {
+      if (err) {
+        console.error("Error reading file when trying to append", err);
+        reject(err);
+        return;
+      }
+      console.log("Reading file");
+
+      await appendFilePromise(destinationPath, data);
+    });
+  });
+}
+
+async function createEmptyFile(filePath: string) {
+  return new Promise<void>((resolve, reject) => {
+    fs.writeFile(filePath, "", (err) => {
+      if (err) {
+        console.error("Error creating empty file", err);
+        reject(err);
+        return;
+      }
+      console.log("Empty file created");
+      resolve();
+    });
+  });
+}
+
+async function appendFilePromise(destinationPath: string, data: Buffer) {
+  return new Promise<void>((resolve, reject) => {
+    fs.appendFile(destinationPath, data, { encoding: null }, (err) => {
+      if (err) {
+        console.error("Error appending file", err);
+        reject(err);
+        return;
+      }
+      console.log("Appended buffer");
+      resolve();
+    });
+  });
+}

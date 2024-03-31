@@ -5,7 +5,7 @@ import * as path from "path";
 import { Client, Message, TextChannel } from "discord.js";
 import * as fs from "fs";
 import { channelID, token } from "./Login";
-import { spliceFiles } from "./File";
+import { spliceFiles, combineFiles } from "./File";
 import { downloadFromDiscord, uploadToDiscord } from "./Discord";
 import livereload from "connect-livereload";
 
@@ -91,7 +91,12 @@ app.post("/download", async (req: Request, res: Response) => {
   await Promise.all(downloadPromises);
   console.log("All downloaded", downloadPromises.length);
 
-  res.status(200).sendFile(path.join(uploadedPath, "0"));
+  await combineFiles(req.body.fileName, uploadedPath);
+  // loop through downloads by number and compile into one file
+  // rename the file to req.body.fileName
+  // return the new file
+
+  res.status(200).sendFile(path.join(uploadedPath, req.body.fileName));
 });
 
 app.listen(5000, () => {
