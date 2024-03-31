@@ -6,6 +6,22 @@ interface Props {
   files: fileArrayElement[];
 }
 
+function fixName(file: string) {
+  const parts = file.split(".");
+  let x = "";
+  if (parts.length == 1) {
+    x += parts[0] + " (1)";
+  } else {
+    for (let i = 0; i < parts.length - 2; i++) {
+      x += parts[i] + ".";
+    }
+    x += parts[parts.length - 2];
+    x += " (1).";
+    x += parts[parts.length - 1];
+  }
+  return x;
+}
+
 const Button: React.FC<Props> = ({ setFiles, files }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -25,10 +41,12 @@ const Button: React.FC<Props> = ({ setFiles, files }: Props) => {
           // change file name if there are duplicates
           for (let i = 1; localStorage.getItem(fileName) != null; i++) {
             if (i == 1) {
-              fileName += " (" + i.toString() + ")";
+              fileName = fixName(fileName);
             } else {
-              fileName =
-                fileName.slice(0, fileName.length - 2) + i.toString() + ")";
+              fileName = fileName.replace(/(\(\d+\))/, (match: string) => {
+                let number = parseInt(match.match(/\d+/)![0]) + 1;
+                return `(${number})`;
+              });
             }
           }
           localStorage.setItem(fileName, data.messageIDs);
