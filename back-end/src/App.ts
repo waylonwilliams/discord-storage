@@ -80,7 +80,6 @@ app.put("/upload", async (req: Request, res: Response) => {
 });
 
 app.post("/download", async (req: Request, res: Response) => {
-  console.log(req.body.fileName);
   const messageIDS = req.body.ids.split(",");
 
   const downloadPromises = messageIDS.map(async (id: string, index: number) => {
@@ -91,13 +90,26 @@ app.post("/download", async (req: Request, res: Response) => {
   await Promise.all(downloadPromises);
   console.log("All downloaded", downloadPromises.length);
 
-  const writePath = await combineFiles(req.body.fileName, uploadedPath);
-  // loop through downloads by number and compile into one file
-  // rename the file to req.body.fileName
-  // return the new file
-  console.log(writePath);
+  const removeFiles: string[] = await combineFiles("return", uploadedPath);
 
-  res.status(200).sendFile(writePath);
+  res.status(200).sendFile(path.join(uploadedPath, "return"), (err) => {
+    if (err) {
+      console.error("Error sending file to frontend", err);
+    } else {
+      for (const f of removeFiles) {
+        fs.unlink(f, (e) => {
+          if (e) {
+            console.error("Error deleting main file", e);
+          }
+        });
+      }
+      fs.unlink(path.join(uploadedPath, "return"), (e) => {
+        if (e) {
+          console.error("Error deleting main file", e);
+        }
+      });
+    }
+  });
 });
 
 app.listen(5000, () => {

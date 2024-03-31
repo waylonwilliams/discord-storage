@@ -62,7 +62,7 @@ export async function combineFiles(fileName: string, uploadedPath: string) {
   // });
   // await Promise.all(appendPromises);
 
-  return writePath;
+  return fileNames;
 }
 
 function checkFileExists(filePath: string) {
