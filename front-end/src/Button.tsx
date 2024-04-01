@@ -50,7 +50,15 @@ const Button: React.FC<Props> = ({ setFiles, files }: Props) => {
             }
           }
           localStorage.setItem(fileName, data.messageIDs);
-          setFiles([...files, { file: fileName, ids: data.messageIDs }]);
+          let tempFilesArr = [];
+          const ls = { ...localStorage }; // { file: csv of ids }
+          for (const key in ls) {
+            tempFilesArr.push({
+              file: key,
+              ids: ls[key],
+            });
+          }
+          setFiles(tempFilesArr);
         });
     }
   };
