@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <Button setFiles={setFiles} files={files} />
+      <Button setFiles={setFiles} />
       <Files files={files} setFiles={setFiles} />
     </>
   );

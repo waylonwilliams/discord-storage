@@ -3,7 +3,6 @@ import { fileArrayElement } from "./Props.ts";
 
 interface Props {
   setFiles: (val: fileArrayElement[]) => void;
-  files: fileArrayElement[];
 }
 
 function fixName(file: string) {
@@ -22,7 +21,7 @@ function fixName(file: string) {
   return x;
 }
 
-const Button: React.FC<Props> = ({ setFiles, files }: Props) => {
+const Button: React.FC<Props> = ({ setFiles }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
