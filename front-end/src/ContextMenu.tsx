@@ -1,10 +1,18 @@
+import { fileArrayElement } from "./Props";
+
 interface Props {
   x: number;
   y: number;
   rightClickedFile: string;
+  setFiles: (arg: fileArrayElement[]) => void;
 }
 
-export default function ContextMenu({ x, y, rightClickedFile }: Props) {
+export default function ContextMenu({
+  x,
+  y,
+  rightClickedFile,
+  setFiles,
+}: Props) {
   function onDownloadClick() {
     fetch("http://localhost:5000/download", {
       method: "POST",
@@ -32,7 +40,18 @@ export default function ContextMenu({ x, y, rightClickedFile }: Props) {
 
   function onMoveClick() {}
 
-  function onDeleteClick() {}
+  function onDeleteClick() {
+    localStorage.removeItem(rightClickedFile);
+    let tempFilesArr = [];
+    const ls = { ...localStorage }; // { file: csv of ids }
+    for (const key in ls) {
+      tempFilesArr.push({
+        file: key,
+        ids: ls[key],
+      });
+    }
+    setFiles(tempFilesArr);
+  }
 
   function onRenameClick() {}
 

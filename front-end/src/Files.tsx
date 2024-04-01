@@ -4,9 +4,10 @@ import ContextMenu from "./ContextMenu.tsx";
 
 interface Props {
   files: fileArrayElement[];
+  setFiles: (arg: fileArrayElement[]) => void;
 }
 
-export default function Files({ files }: Props) {
+export default function Files({ files, setFiles }: Props) {
   const [rightClicked, setRightClicked] = useState<boolean>(false);
   const [contextMenuPoints, setContextMenuPoints] = useState<location>({
     x: 0,
@@ -53,6 +54,7 @@ export default function Files({ files }: Props) {
             x={contextMenuPoints.x}
             y={contextMenuPoints.y}
             rightClickedFile={rightClickedFile}
+            setFiles={setFiles}
           />
         )}
       </div>
