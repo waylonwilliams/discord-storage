@@ -43,9 +43,13 @@ export default function Files({ files, setFiles }: Props) {
             }}
             key={index}
           >
-            <div className="bg-purple-1 max-w-44 m-5">
-              <img src="/assets/file.png" />
-              <div className="text-center">{file.file}</div>
+            <div className="bg-purple-1 w-44 h-44 m-5 text-center flex flex-col items-center">
+              <div>
+                {file.file.length < 15
+                  ? file.file
+                  : file.file.slice(0, 15) + "..."}
+              </div>
+              <img className="w-24 h-24" src="/assets/file.png" />
             </div>
           </div>
         ))}
