@@ -1,4 +1,3 @@
-import Files from "./Files";
 import { useState } from "react";
 import { fileArrayElement } from "./Props.ts";
 import LeftColumn from "./LeftColumn.tsx";
@@ -14,6 +13,8 @@ function App() {
     });
   }
   const [files, setFiles] = useState<fileArrayElement[]>(tempFilesArr); // [ {file: fileName, ids: csv of message ids} ]
+  const [folders, setFolders] = useState<string[]>(["Home"]);
+  const [selectedFolder, setSelectedFolder] = useState<string>("Home");
 
   return (
     <>

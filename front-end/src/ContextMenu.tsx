@@ -7,6 +7,7 @@ interface Props {
   setFiles: (arg: fileArrayElement[]) => void;
 }
 
+// when not clicking on a file, give the option to upload a file or create a folder
 export default function ContextMenu({
   x,
   y,
