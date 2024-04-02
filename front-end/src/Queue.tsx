@@ -12,20 +12,20 @@ export default function Queue({
   setDownloading,
 }: Props) {
   return (
-    <div className="absolute bottom-0 bg-white w-1/6">
+    <div className="absolute bottom-0 w-full">
       {uploading.length > 0 && (
         <>
-          <div>Uploading</div>
+          <div className="p-1 m-1 bg-gray-2">Uploading</div>
           {uploading.map((file) => (
-            <div className="bg-gray-500">{file}</div>
+            <div className="bg-gray-3 p-1 m-1">{file}</div>
           ))}
         </>
       )}
       {downloading.length > 0 && (
         <>
-          <div>Downloading</div>
+          <div className="p-1 m-1 bg-gray-2">Downloading</div>
           {downloading.map((file) => (
-            <div className="bg-gray-500">{file}</div>
+            <div className="bg-gray-3 p-1 m-1">{file}</div>
           ))}
         </>
       )}
