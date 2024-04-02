@@ -1,7 +1,8 @@
 import Files from "./Files";
-import Button from "./Button";
 import { useState } from "react";
 import { fileArrayElement } from "./Props.ts";
+import LeftColumn from "./LeftColumn.tsx";
+import RightColumn from "./RightColumn.tsx";
 
 function App() {
   let tempFilesArr = [];
@@ -16,8 +17,10 @@ function App() {
 
   return (
     <>
-      <Button setFiles={setFiles} />
-      <Files files={files} setFiles={setFiles} />
+      <div className="flex w-full">
+        <LeftColumn setFiles={setFiles} />
+        <RightColumn files={files} setFiles={setFiles} />
+      </div>
     </>
   );
 }
