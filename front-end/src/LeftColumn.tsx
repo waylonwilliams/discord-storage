@@ -31,9 +31,9 @@ export default function LeftColumn({
     <div className="flex-none w-1/6 relative bg-gray-1 min-h-screen text-center text-white">
       <Button setFiles={setFiles} />
       {folders.map((folder) => (
-        <div className="bg-gray-2 m-1">{folder}</div>
+        <div className="bg-gray-3 m-1 p-1">{folder}</div>
       ))}
-      <div className="bg-gray-2 m-1">Create New Folder</div>
+      <div className="bg-gray-3 m-1 p-1">Create New Folder</div>
       <Queue
         downloading={downloading}
         setDownloading={setDownloading}
