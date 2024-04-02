@@ -43,7 +43,7 @@ export default function Files({ files, setFiles }: Props) {
             }}
             key={index}
           >
-            <div className="bg-violet-300 max-w-44 m-5">
+            <div className="bg-purple-1 max-w-44 m-5">
               <img src="/assets/file.png" />
               <div className="text-center">{file.file}</div>
             </div>
