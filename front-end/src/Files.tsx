@@ -43,13 +43,9 @@ export default function Files({ files, setFiles }: Props) {
             }}
             key={index}
           >
-            <div className="bg-purple-1 w-44 h-44 m-5 text-center flex flex-col items-center hover:bg-purple-2 rounded-lg">
-              <div>
-                {file.file.length < 15
-                  ? file.file
-                  : file.file.slice(0, 15) + "..."}
-              </div>
-              <img className="w-24 h-24" src="/assets/file.png" />
+            <div className="bg-purple-1 w-44 h-44 m-5 text-center flex flex-col items-center hover:bg-purple-2 rounded-lg text-sm">
+              <div className="truncate max-w-36 pt-2">{file.file}</div>
+              <img className="w-24 h-24 mt-4" src="/assets/file.png" />
             </div>
           </div>
         ))}
