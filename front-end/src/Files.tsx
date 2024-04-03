@@ -26,7 +26,7 @@ export default function Files({ files, setFiles }: Props) {
 
   return (
     <>
-      <div className="grid grid-cols-6">
+      <div className="grid grid-cols-6 m-2">
         {files.map((file: fileArrayElement, index) => (
           // outer div to center in column, inner div is each file box
           <div
@@ -43,7 +43,7 @@ export default function Files({ files, setFiles }: Props) {
             }}
             key={index}
           >
-            <div className="bg-purple-1 w-44 h-44 m-5 text-center flex flex-col items-center hover:bg-purple-2 rounded-lg text-sm">
+            <div className="bg-purple-1 w-44 h-44 m-4 text-center flex flex-col items-center hover:bg-purple-2 rounded-lg text-sm">
               <div className="truncate max-w-36 pt-2">{file.file}</div>
               <img className="w-24 h-24 mt-4" src="/assets/file.png" />
             </div>
