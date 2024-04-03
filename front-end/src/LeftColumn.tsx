@@ -1,6 +1,7 @@
 import { fileArrayElement } from "./Props.ts";
 import Button from "./Button.tsx";
 import Queue from "./Queue.tsx";
+import Folders from "./Folders.tsx";
 
 interface Props {
   setFiles: (arg: fileArrayElement[]) => void;
@@ -36,21 +37,12 @@ export default function LeftColumn({
         </div>
       </div>
       <Button setFiles={setFiles} />
-      {folders.map((folder) => (
-        <div
-          className={
-            "m-1 p-1 rounded-sm" +
-            (folder === selectedFolder
-              ? " bg-red-500 hover:bg-red-400"
-              : " bg-gray-3 hover:bg-gray-4")
-          }
-        >
-          {folder}
-        </div>
-      ))}
-      <div className="bg-gray-3 m-1 p-1 hover:bg-gray-4 rounded-sm">
-        Create New Folder
-      </div>
+      <Folders
+        folders={folders}
+        setFolders={setFolders}
+        selectedFolder={selectedFolder}
+        setSelectedFolder={setSelectedFolder}
+      />
       <Queue
         downloading={downloading}
         setDownloading={setDownloading}
