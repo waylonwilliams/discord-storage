@@ -5,6 +5,8 @@ interface Props {
   y: number;
   rightClickedFile: string;
   setFiles: (arg: fileArrayElement[]) => void;
+  downloading: string[];
+  setDownloading: (arg: string[]) => void;
 }
 
 // when not clicking on a file, give the option to upload a file or create a folder
@@ -13,8 +15,12 @@ export default function ContextMenu({
   y,
   rightClickedFile,
   setFiles,
+  downloading,
+  setDownloading,
 }: Props) {
   function onDownloadClick() {
+    const newDownload = [...downloading, rightClickedFile];
+    setDownloading(newDownload);
     fetch("http://localhost:5000/download", {
       method: "POST",
       headers: {
@@ -35,6 +41,10 @@ export default function ContextMenu({
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
+        const newDownload = downloading.filter(
+          (item) => item !== rightClickedFile
+        );
+        setDownloading(newDownload);
         // id like to make it prompt with a save as but maybe not, if file is slow to download ig it makes sense not to
       });
   }

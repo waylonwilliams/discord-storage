@@ -32,7 +32,12 @@ function App() {
           uploading={uploading}
           setUploading={setUploading}
         />
-        <RightColumn files={files} setFiles={setFiles} />
+        <RightColumn
+          files={files}
+          setFiles={setFiles}
+          downloading={downloading}
+          setDownloading={setDownloading}
+        />
       </div>
     </>
   );

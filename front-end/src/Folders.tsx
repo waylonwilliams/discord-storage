@@ -22,6 +22,7 @@ export default function Folders({
               : " bg-gray-3 hover:bg-gray-4")
           }
           onClick={() => setSelectedFolder(folder)}
+          key={folder}
         >
           {folder}
         </div>
