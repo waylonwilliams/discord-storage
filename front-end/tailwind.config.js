@@ -9,6 +9,7 @@ export default {
         "gray-3": "#36393e",
         "gray-4": "#424549",
         "purple-1": "#7289da",
+        "purple-2": "#869adf",
       },
     },
   },

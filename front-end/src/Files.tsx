@@ -43,7 +43,7 @@ export default function Files({ files, setFiles }: Props) {
             }}
             key={index}
           >
-            <div className="bg-purple-1 w-44 h-44 m-5 text-center flex flex-col items-center">
+            <div className="bg-purple-1 w-44 h-44 m-5 text-center flex flex-col items-center hover:bg-purple-2 rounded-lg">
               <div>
                 {file.file.length < 15
                   ? file.file

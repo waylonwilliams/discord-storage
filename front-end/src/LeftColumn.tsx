@@ -29,11 +29,21 @@ export default function LeftColumn({
 }: Props) {
   return (
     <div className="flex-none w-1/6 relative bg-gray-1 min-h-screen text-center text-white">
+      <div className="flex-none">
+        <div className="flex">
+          <img src="/assets/logo.png" className="w-12 h-12" />
+          Discord storage
+        </div>
+      </div>
       <Button setFiles={setFiles} />
       {folders.map((folder) => (
-        <div className="bg-gray-3 m-1 p-1">{folder}</div>
+        <div className="bg-gray-3 m-1 p-1 hover:bg-gray-4 rounded-sm">
+          {folder}
+        </div>
       ))}
-      <div className="bg-gray-3 m-1 p-1">Create New Folder</div>
+      <div className="bg-gray-3 m-1 p-1 hover:bg-gray-4 rounded-sm">
+        Create New Folder
+      </div>
       <Queue
         downloading={downloading}
         setDownloading={setDownloading}
