@@ -32,12 +32,19 @@ export default function LeftColumn({
       <div className="flex-none">
         <div className="flex">
           <img src="/assets/logo.png" className="w-12 h-12" />
-          Discord storage
+          <p>Discord storage</p>
         </div>
       </div>
       <Button setFiles={setFiles} />
       {folders.map((folder) => (
-        <div className="bg-gray-3 m-1 p-1 hover:bg-gray-4 rounded-sm">
+        <div
+          className={
+            "m-1 p-1 rounded-sm" +
+            (folder === selectedFolder
+              ? " bg-red-500 hover:bg-red-400"
+              : " bg-gray-3 hover:bg-gray-4")
+          }
+        >
           {folder}
         </div>
       ))}

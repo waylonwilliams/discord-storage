@@ -71,7 +71,7 @@ const Button: React.FC<Props> = ({ setFiles }: Props) => {
         ref={fileInputRef}
       />
       <button
-        className="bg-purple-1 hover:bg-blue-800 text-white font-bold py-2 px-10 rounded-full mt-6"
+        className="bg-purple-1 hover:bg-purple-2 text-white font-bold py-2 px-10 rounded-full m-4"
         onClick={() => fileInputRef.current?.click()}
       >
         Upload
