@@ -15,11 +15,8 @@ function App() {
   const [files, setFiles] = useState<fileArrayElement[]>(tempFilesArr); // [ {file: fileName, ids: csv of message ids} ]
   const [folders, setFolders] = useState<string[]>(["Home", "Trash"]);
   const [selectedFolder, setSelectedFolder] = useState<string>("Home");
-  const [uploading, setUploading] = useState<string[]>([
-    "File.tsx",
-    "File2.tsx",
-  ]);
-  const [downloading, setDownloading] = useState<string[]>(["Meow.jpg"]);
+  const [uploading, setUploading] = useState<string[]>([]);
+  const [downloading, setDownloading] = useState<string[]>([]);
 
   return (
     <>

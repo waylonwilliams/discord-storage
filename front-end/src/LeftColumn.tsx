@@ -36,7 +36,11 @@ export default function LeftColumn({
           <p>Discord storage</p>
         </div>
       </div>
-      <Button setFiles={setFiles} />
+      <Button
+        setFiles={setFiles}
+        uploading={uploading}
+        setUploading={setUploading}
+      />
       <Folders
         folders={folders}
         setFolders={setFolders}
