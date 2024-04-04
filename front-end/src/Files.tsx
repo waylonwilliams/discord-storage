@@ -33,7 +33,7 @@ export default function Files({
 
   return (
     <>
-      <div className="grid grid-cols-6 m-2">
+      <div className="grid grid-cols-6 m-2 cursor-default">
         {files.map((file: fileArrayElement, index) => (
           // outer div to center in column, inner div is each file box
           <div

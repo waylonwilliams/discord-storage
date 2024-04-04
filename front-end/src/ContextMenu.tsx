@@ -68,32 +68,32 @@ export default function ContextMenu({
 
   return (
     <div
-      className={`bg-gray-3 absolute text-white max-w-44`}
+      className={`bg-gray-3 absolute text-white max-w-44 border-2 border-gray-1 cursor-default`}
       style={{ top: `${y + 12}px`, left: `${x + 5}px` }}
     >
       <div className="p-1 m-1 border-b-4 border-purple-1">
         {rightClickedFile}
       </div>
       <div
-        className="bg-gray-3 p-1 m-1 hover:bg-gray-4 rounded-sm"
+        className="bg-gray-3 p-1 m-1 hover:bg-gray-4 rounded-sm hover:cursor-pointer"
         onClick={onDownloadClick}
       >
         Download
       </div>
       <div
-        className="bg-gray-3 p-1 m-1 hover:bg-gray-4 rounded-sm"
+        className="bg-gray-3 p-1 m-1 hover:bg-gray-4 rounded-sm hover:cursor-pointer"
         onClick={onMoveClick}
       >
         Move
       </div>
       <div
-        className="bg-gray-3 p-1 m-1 hover:bg-gray-4 rounded-sm"
+        className="bg-gray-3 p-1 m-1 hover:bg-gray-4 rounded-sm hover:cursor-pointer"
         onClick={onRenameClick}
       >
         Rename
       </div>
       <div
-        className="bg-gray-3 p-1 m-1 hover:bg-red-600 rounded-sm"
+        className="bg-gray-3 p-1 m-1 hover:bg-red-600 rounded-sm hover:cursor-pointer"
         onClick={onDeleteClick}
       >
         Delete

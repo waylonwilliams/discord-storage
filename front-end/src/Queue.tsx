@@ -12,7 +12,7 @@ export default function Queue({
   setDownloading,
 }: Props) {
   return (
-    <div className="absolute bottom-0 w-full">
+    <div className="absolute bottom-0 w-full cursor-default">
       {uploading.length > 0 && (
         <>
           <div className="p-1 m-1 border-b-4 border-purple-1">Uploading</div>
