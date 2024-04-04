@@ -40,7 +40,7 @@ export default function Files({
             className="flex justify-center"
             onContextMenu={(e) => {
               e.preventDefault(); // disables default context menu
-              if (e.pageX > 1250) {
+              if (e.pageX > screen.width - 200) {
                 // makes sure the context menu is in range nicely
                 setContextMenuPoints({
                   x: e.pageX - 175,
