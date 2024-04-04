@@ -40,11 +40,18 @@ export default function Files({
             className="flex justify-center"
             onContextMenu={(e) => {
               e.preventDefault(); // disables default context menu
-              console.log("context menu", e.pageX, e.pageY);
-              setContextMenuPoints({
-                x: e.pageX,
-                y: e.pageY,
-              });
+              if (e.pageX > 1250) {
+                // makes sure the context menu is in range nicely
+                setContextMenuPoints({
+                  x: e.pageX - 175,
+                  y: e.pageY,
+                });
+              } else {
+                setContextMenuPoints({
+                  x: e.pageX,
+                  y: e.pageY,
+                });
+              }
               setRightClickedFile(file.file);
               setRightClicked(true);
             }}
