@@ -18,7 +18,7 @@ export default function Folders({
           className={
             "m-1 p-1 rounded-sm" +
             (folder === selectedFolder
-              ? " bg-red-500 hover:bg-red-400"
+              ? " bg-purple-1 hover:bg-purple-2"
               : " bg-gray-3 hover:bg-gray-4")
           }
           onClick={() => setSelectedFolder(folder)}

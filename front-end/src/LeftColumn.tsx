@@ -30,12 +30,7 @@ export default function LeftColumn({
 }: Props) {
   return (
     <div className="flex-none w-1/6 relative bg-gray-1 min-h-screen text-center text-white">
-      <div className="flex-none">
-        <div className="flex">
-          <img src="/assets/logo.png" className="w-12 h-12" />
-          <p>Discord storage</p>
-        </div>
-      </div>
+      <img src="/assets/logo.png" className="m-5" />
       <Button
         setFiles={setFiles}
         uploading={uploading}
