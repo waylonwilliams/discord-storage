@@ -68,7 +68,7 @@ export default function ContextMenu({
 
   return (
     <div
-      className={`bg-gray-3 absolute text-white max-w-44 border-2 border-gray-1 cursor-default`}
+      className={`bg-gray-3 absolute text-white max-w-44 border-2 border-gray-1 cursor-default rounded-md`}
       style={{ top: `${y + 12}px`, left: `${x + 5}px` }}
     >
       <div className="p-1 m-1 border-b-4 border-purple-1">
