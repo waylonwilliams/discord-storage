@@ -23,11 +23,12 @@ function fixName(file: string) {
   return x;
 }
 
-const Button: React.FC<Props> = ({
-  setFiles,
-  uploading,
-  setUploading,
-}: Props) => {
+// const Button: React.FC<Props> = ({
+//   setFiles,
+//   uploading,
+//   setUploading,
+// }: Props) => {
+export default function Button({ setFiles, uploading, setUploading }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +89,4 @@ const Button: React.FC<Props> = ({
       </button>
     </>
   );
-};
-
-export default Button;
+}
