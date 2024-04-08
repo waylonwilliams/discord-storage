@@ -6,24 +6,10 @@ import RightColumn from "./RightColumn.tsx";
 function App() {
   // FOR DEBUGGING
   if (localStorage.getItem("Home") === null) {
-    localStorage.setItem(
-      "Home",
-      JSON.stringify({
-        Filename: ["1111", "2222", "3333", "4444"],
-        File1: ["1111", "2222", "3333", "4444"],
-        File2: ["1111", "2222", "3333", "4444"],
-      })
-    );
+    localStorage.setItem("Home", JSON.stringify({}));
   }
   if (localStorage.getItem("Trash") === null) {
-    localStorage.setItem(
-      "Trash",
-      JSON.stringify({
-        Filename: ["1111", "2222", "3333", "4444"],
-        File1: ["1111", "2222", "3333", "4444"],
-        File2: ["1111", "2222", "3333", "4444"],
-      })
-    );
+    localStorage.setItem("Trash", JSON.stringify({}));
   }
 
   let tempFoldersArr = [];
