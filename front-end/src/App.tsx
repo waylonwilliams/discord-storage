@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fileListObject, updateFoldersFilesStates } from "./Props.ts";
+import { fileListObject } from "./Props.ts";
 import LeftColumn from "./LeftColumn.tsx";
 import RightColumn from "./RightColumn.tsx";
 
@@ -26,13 +26,19 @@ function App() {
     );
   }
 
-  const [files, setFiles] = useState<fileListObject>({});
-  const [folders, setFolders] = useState<string[]>([]);
+  let tempFoldersArr = [];
+  const ls = { ...localStorage }; // { folder: { file : [ids, ids] }, folder: { file : [ids, ids] } }
+  for (const folder in ls) {
+    if (folder !== "Home" && folder !== "Trash") {
+      tempFoldersArr.push(folder);
+    }
+  }
+
+  const [files, setFiles] = useState<fileListObject>(JSON.parse(ls["Home"]));
+  const [folders, setFolders] = useState<string[]>(tempFoldersArr);
   const [selectedFolder, setSelectedFolder] = useState<string>("Home");
   const [uploading, setUploading] = useState<string[]>([]);
   const [downloading, setDownloading] = useState<string[]>([]);
-
-  updateFoldersFilesStates(setFolders, setFiles, selectedFolder);
 
   return (
     <>

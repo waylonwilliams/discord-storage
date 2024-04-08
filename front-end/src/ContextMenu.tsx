@@ -34,7 +34,7 @@ export default function ContextMenu({
       },
       body: JSON.stringify({
         fileName: rightClickedFile,
-        ids: files[rightClickedFile],
+        ids: JSON.stringify(files[rightClickedFile]),
       }),
     })
       .then((response) => response.blob())

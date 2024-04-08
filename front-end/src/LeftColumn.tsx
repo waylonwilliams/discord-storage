@@ -46,6 +46,7 @@ export default function LeftColumn({
         setFolders={setFolders}
         selectedFolder={selectedFolder}
         setSelectedFolder={setSelectedFolder}
+        setFiles={setFiles}
       />
       <Queue
         downloading={downloading}
