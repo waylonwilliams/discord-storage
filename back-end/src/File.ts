@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 export async function spliceFiles(
   filePath: string,
@@ -16,7 +17,8 @@ export async function spliceFiles(
         return;
       }
       for (let i = 0; i < fileSize; i += 25690112) {
-        const curPath: string = path.join(uploadedPath, i.toString());
+        // const curPath: string = path.join(uploadedPath, i.toString());
+        const curPath: string = path.join(uploadedPath, uuidv4());
         await writeFilePromise(curPath, data, i);
         splicedFilePaths.push(curPath);
         if (i + 25690112 > fileSize) {

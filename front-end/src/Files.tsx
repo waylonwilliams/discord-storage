@@ -39,7 +39,6 @@ export default function Files({
     <>
       {Object.keys(files).length == 0 ? (
         <div className="flex justify-center items-center h-screen">
-          Temporary cat for when a folder is empty
           <img src="assets/cat.png" className=" max-w-xs max-h-xs" />
         </div>
       ) : (
