@@ -8,6 +8,8 @@ interface Props {
   setDownloading: (arg: string[]) => void;
   selectedFolder: string;
   setFolders: (arg: string[]) => void;
+  rightClickedFile: string;
+  setRightClickedFile: (arg: string) => void;
 }
 
 export default function RightColumn({
@@ -17,6 +19,8 @@ export default function RightColumn({
   setDownloading,
   selectedFolder,
   setFolders,
+  rightClickedFile,
+  setRightClickedFile,
 }: Props) {
   return (
     <div className="flex-none w-5/6 bg-gray-2 min-h-screen">
@@ -27,6 +31,8 @@ export default function RightColumn({
         setDownloading={setDownloading}
         selectedFolder={selectedFolder}
         setFolders={setFolders}
+        rightClickedFile={rightClickedFile}
+        setRightClickedFile={setRightClickedFile}
       />
     </div>
   );

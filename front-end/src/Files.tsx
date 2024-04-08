@@ -9,6 +9,8 @@ interface Props {
   setDownloading: (arg: string[]) => void;
   selectedFolder: string;
   setFolders: (arg: string[]) => void;
+  rightClickedFile: string;
+  setRightClickedFile: (arg: string) => void;
 }
 
 export default function Files({
@@ -18,13 +20,14 @@ export default function Files({
   setDownloading,
   selectedFolder,
   setFolders,
+  rightClickedFile,
+  setRightClickedFile,
 }: Props) {
   const [rightClicked, setRightClicked] = useState<boolean>(false);
   const [contextMenuPoints, setContextMenuPoints] = useState<location>({
     x: 0,
     y: 0,
   });
-  const [rightClickedFile, setRightClickedFile] = useState<string>("");
 
   // cleanly add click off listener
   useEffect(() => {

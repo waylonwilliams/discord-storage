@@ -25,11 +25,12 @@ function App() {
   const [selectedFolder, setSelectedFolder] = useState<string>("Home");
   const [uploading, setUploading] = useState<string[]>([]);
   const [downloading, setDownloading] = useState<string[]>([]);
-  const [renamePopup, setRenamePopup] = useState<boolean>(false);
+  const [rightClickedFile, setRightClickedFile] = useState<string>("");
+  const [renamePopup, setRenamePopup] = useState<string>("");
 
   return (
     <>
-      <div className={"flex w-full" + (renamePopup ? " blur-sm" : "")}>
+      <div className={"flex w-full" + (renamePopup !== "" ? " blur-sm" : "")}>
         <LeftColumn
           setFiles={setFiles}
           folders={folders}
@@ -49,9 +50,17 @@ function App() {
           setDownloading={setDownloading}
           selectedFolder={selectedFolder}
           setFolders={setFolders}
+          rightClickedFile={rightClickedFile}
+          setRightClickedFile={setRightClickedFile}
         />
       </div>
-      {renamePopup && <Popup setRenamePopup={setRenamePopup} />}
+      {renamePopup !== "" && (
+        <Popup
+          setRenamePopup={setRenamePopup}
+          selectedFolder={selectedFolder}
+          rightClickedFile={rightClickedFile}
+        />
+      )}
     </>
   );
 }

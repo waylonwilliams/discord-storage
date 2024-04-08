@@ -1,5 +1,7 @@
 interface Props {
-  setRenamePopup: (arg: boolean) => void;
+  setRenamePopup: (arg: string) => void;
+  rightClickedFile: string;
+  selectedFolder: string;
 }
 
 export default function Popup({ setRenamePopup }: Props) {
@@ -11,7 +13,7 @@ export default function Popup({ setRenamePopup }: Props) {
         <div className="flex justify-end">
           <button
             className="bg-purple-2 rounded-lg p-1 m-2"
-            onClick={() => setRenamePopup(false)}
+            onClick={() => setRenamePopup("")}
           >
             Cancel
           </button>
