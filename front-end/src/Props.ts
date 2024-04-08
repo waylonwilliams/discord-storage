@@ -1,8 +1,3 @@
-export interface fileArrayElement {
-  file: string;
-  ids: string;
-}
-
 export interface fileListObject {
   [key: string]: string[];
 }

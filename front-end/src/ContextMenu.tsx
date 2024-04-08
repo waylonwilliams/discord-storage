@@ -59,6 +59,17 @@ export default function ContextMenu({
 
   function onDeleteClick() {
     let updatedFiles = files;
+    if (selectedFolder !== "Trash") {
+      const unparsedTrash = localStorage.getItem("Trash");
+      if (unparsedTrash !== null) {
+        const trashFiles = JSON.parse(unparsedTrash);
+        const newTrashFiles = {
+          ...trashFiles,
+          [rightClickedFile]: files[rightClickedFile],
+        };
+        localStorage.setItem("Trash", JSON.stringify(newTrashFiles));
+      }
+    }
     delete updatedFiles[rightClickedFile];
     localStorage.setItem(selectedFolder, JSON.stringify(updatedFiles));
 

@@ -4,7 +4,6 @@ import LeftColumn from "./LeftColumn.tsx";
 import RightColumn from "./RightColumn.tsx";
 
 function App() {
-  // FOR DEBUGGING
   if (localStorage.getItem("Home") === null) {
     localStorage.setItem("Home", JSON.stringify({}));
   }
