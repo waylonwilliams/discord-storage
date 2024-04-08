@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { fileArrayElement, location } from "./Props.ts";
+import { fileListObject, location } from "./Props.ts";
 import ContextMenu from "./ContextMenu.tsx";
 
 interface Props {
-  files: fileArrayElement[];
-  setFiles: (arg: fileArrayElement[]) => void;
+  files: fileListObject;
+  setFiles: (arg: fileListObject) => void;
   downloading: string[];
   setDownloading: (arg: string[]) => void;
 }
@@ -34,7 +34,7 @@ export default function Files({
   return (
     <>
       <div className="grid grid-cols-6 m-2 cursor-default">
-        {files.map((file: fileArrayElement, index) => (
+        {Object.keys(files).map((file: string, index) => (
           // outer div to center in column, inner div is each file box
           <div
             className="flex justify-center"
@@ -52,13 +52,13 @@ export default function Files({
                   y: e.pageY,
                 });
               }
-              setRightClickedFile(file.file);
+              setRightClickedFile(file);
               setRightClicked(true);
             }}
             key={index}
           >
             <div className="bg-purple-1 w-44 h-44 m-4 text-center flex flex-col items-center hover:bg-purple-2 rounded-lg text-sm">
-              <div className="truncate max-w-36 pt-2">{file.file}</div>
+              <div className="truncate max-w-36 pt-2">{file}</div>
               <img className="w-24 h-24 mt-4" src="/assets/file.png" />
             </div>
           </div>

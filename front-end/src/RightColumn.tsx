@@ -1,9 +1,9 @@
-import { fileArrayElement } from "./Props";
+import { fileListObject } from "./Props";
 import Files from "./Files";
 
 interface Props {
-  files: fileArrayElement[];
-  setFiles: (arg: fileArrayElement[]) => void;
+  files: fileListObject;
+  setFiles: (arg: fileListObject) => void;
   downloading: string[];
   setDownloading: (arg: string[]) => void;
 }

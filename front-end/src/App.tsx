@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fileArrayElement } from "./Props.ts";
+import { fileListObject, updateFoldersFilesStates } from "./Props.ts";
 import LeftColumn from "./LeftColumn.tsx";
 import RightColumn from "./RightColumn.tsx";
 
@@ -8,37 +8,31 @@ function App() {
   if (localStorage.getItem("Home") === null) {
     localStorage.setItem(
       "Home",
-      JSON.stringify([
-        { file: "Filename", ids: ["1111", "2222", "3333", "4444"] },
-        { file: "File1", ids: ["1111", "2222", "3333", "4444"] },
-        { file: "File2", ids: ["1111", "2222", "3333", "4444"] },
-      ])
+      JSON.stringify({
+        Filename: ["1111", "2222", "3333", "4444"],
+        File1: ["1111", "2222", "3333", "4444"],
+        File2: ["1111", "2222", "3333", "4444"],
+      })
     );
   }
   if (localStorage.getItem("Trash") === null) {
     localStorage.setItem(
       "Trash",
-      JSON.stringify([
-        { file: "Filename", ids: ["1111", "2222", "3333", "4444"] },
-        { file: "File1", ids: ["1111", "2222", "3333", "4444"] },
-        { file: "File2", ids: ["1111", "2222", "3333", "4444"] },
-      ])
+      JSON.stringify({
+        Filename: ["1111", "2222", "3333", "4444"],
+        File1: ["1111", "2222", "3333", "4444"],
+        File2: ["1111", "2222", "3333", "4444"],
+      })
     );
   }
 
-  let tempFoldersArr = [];
-  const ls = { ...localStorage }; // { folder: [], folder: [] }
-  for (const folder in ls) {
-    if (folder !== "Home" && folder !== "Trash") {
-      tempFoldersArr.push(folder);
-    }
-  }
-
-  const [files, setFiles] = useState<fileArrayElement[]>(ls["Home"]);
-  const [folders, setFolders] = useState<string[]>(tempFoldersArr);
+  const [files, setFiles] = useState<fileListObject>({});
+  const [folders, setFolders] = useState<string[]>([]);
   const [selectedFolder, setSelectedFolder] = useState<string>("Home");
   const [uploading, setUploading] = useState<string[]>([]);
   const [downloading, setDownloading] = useState<string[]>([]);
+
+  updateFoldersFilesStates(setFolders, setFiles, selectedFolder);
 
   return (
     <>

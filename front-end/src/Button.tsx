@@ -37,7 +37,6 @@ export default function Button({ setFiles, uploading, setUploading }: Props) {
       formData.set("file", event.target.files[0]); // by accessing index 0 i think this means only the first selected file would be uploaded
       const newUpload = [...uploading, event.target.files[0].name];
       setUploading(newUpload);
-      console.log(newUpload);
       // upload file to backend
       fetch("http://localhost:5000/upload", {
         method: "PUT",
