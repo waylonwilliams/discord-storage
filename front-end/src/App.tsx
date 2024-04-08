@@ -47,6 +47,7 @@ function App() {
           setDownloading={setDownloading}
           uploading={uploading}
           setUploading={setUploading}
+          files={files}
         />
         <RightColumn
           files={files}

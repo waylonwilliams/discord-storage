@@ -1,10 +1,13 @@
 import React, { useRef } from "react";
-import { fileArrayElement } from "./Props.ts";
+import { fileListObject, updateFoldersFilesStates } from "./Props.ts";
 
 interface Props {
-  setFiles: (val: fileArrayElement[]) => void;
+  setFiles: (val: fileListObject) => void;
   uploading: string[];
   setUploading: (arg: string[]) => void;
+  files: fileListObject;
+  setFolders: (arg: string[]) => void;
+  selectedFolder: string;
 }
 
 function fixName(file: string) {
@@ -28,7 +31,14 @@ function fixName(file: string) {
 //   uploading,
 //   setUploading,
 // }: Props) => {
-export default function Button({ setFiles, uploading, setUploading }: Props) {
+export default function Button({
+  setFiles,
+  uploading,
+  setUploading,
+  files,
+  setFolders,
+  selectedFolder,
+}: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +55,10 @@ export default function Button({ setFiles, uploading, setUploading }: Props) {
         .then((response) => response.json())
         .then((data) => {
           let fileName = data.fileName;
-          const newUpload = uploading.filter((item) => item !== fileName); // should remove
+          const newUpload = uploading.filter((item) => item !== fileName);
           setUploading(newUpload);
           // change file name if there are duplicates
-          for (let i = 1; localStorage.getItem(fileName) != null; i++) {
+          for (let i = 1; files[fileName] != undefined; i++) {
             if (i == 1) {
               fileName = fixName(fileName);
             } else {
@@ -58,16 +68,13 @@ export default function Button({ setFiles, uploading, setUploading }: Props) {
               });
             }
           }
-          localStorage.setItem(fileName, data.messageIDs);
-          let tempFilesArr = [];
-          const ls = { ...localStorage }; // { file: csv of ids }
-          for (const key in ls) {
-            tempFilesArr.push({
-              file: key,
-              ids: ls[key],
-            });
-          }
-          setFiles(tempFilesArr);
+          // add fileName to currentFolders list of files
+          const updatedFiles = { ...files, [fileName]: data.messageIDs };
+          localStorage.setItem(selectedFolder, JSON.stringify(updatedFiles));
+
+          // localStorage.setItem(fileName, data.messageIDs);
+
+          updateFoldersFilesStates(setFolders, setFiles, selectedFolder);
         });
     }
   };

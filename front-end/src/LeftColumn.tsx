@@ -1,10 +1,10 @@
-import { fileArrayElement } from "./Props.ts";
+import { fileListObject } from "./Props.ts";
 import Button from "./Button.tsx";
 import Queue from "./Queue.tsx";
 import Folders from "./Folders.tsx";
 
 interface Props {
-  setFiles: (arg: fileArrayElement[]) => void;
+  setFiles: (arg: fileListObject) => void;
   folders: string[];
   setFolders: (arg: string[]) => void;
   selectedFolder: string;
@@ -13,6 +13,7 @@ interface Props {
   setUploading: (arg: string[]) => void;
   downloading: string[];
   setDownloading: (arg: string[]) => void;
+  files: fileListObject;
 }
 
 // default folders include home and trash
@@ -27,6 +28,7 @@ export default function LeftColumn({
   setUploading,
   downloading,
   setDownloading,
+  files,
 }: Props) {
   return (
     <div className="flex-none w-1/6 relative bg-gray-1 min-h-screen text-center text-white">
@@ -35,6 +37,9 @@ export default function LeftColumn({
         setFiles={setFiles}
         uploading={uploading}
         setUploading={setUploading}
+        files={files}
+        setFolders={setFolders}
+        selectedFolder={selectedFolder}
       />
       <Folders
         folders={folders}
