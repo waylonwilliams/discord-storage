@@ -10,6 +10,7 @@ interface Props {
   setFolders: (arg: string[]) => void;
   rightClickedFile: string;
   setRightClickedFile: (arg: string) => void;
+  setRenamePopup: (arg: string) => void;
 }
 
 export default function RightColumn({
@@ -21,6 +22,7 @@ export default function RightColumn({
   setFolders,
   rightClickedFile,
   setRightClickedFile,
+  setRenamePopup,
 }: Props) {
   return (
     <div className="flex-none w-5/6 bg-gray-2 min-h-screen">
@@ -33,6 +35,7 @@ export default function RightColumn({
         setFolders={setFolders}
         rightClickedFile={rightClickedFile}
         setRightClickedFile={setRightClickedFile}
+        setRenamePopup={setRenamePopup}
       />
     </div>
   );

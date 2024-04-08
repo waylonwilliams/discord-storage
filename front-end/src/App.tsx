@@ -52,6 +52,7 @@ function App() {
           setFolders={setFolders}
           rightClickedFile={rightClickedFile}
           setRightClickedFile={setRightClickedFile}
+          setRenamePopup={setRenamePopup}
         />
       </div>
       {renamePopup !== "" && (

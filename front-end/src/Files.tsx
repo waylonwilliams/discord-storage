@@ -11,6 +11,7 @@ interface Props {
   setFolders: (arg: string[]) => void;
   rightClickedFile: string;
   setRightClickedFile: (arg: string) => void;
+  setRenamePopup: (arg: string) => void;
 }
 
 export default function Files({
@@ -22,6 +23,7 @@ export default function Files({
   setFolders,
   rightClickedFile,
   setRightClickedFile,
+  setRenamePopup,
 }: Props) {
   const [rightClicked, setRightClicked] = useState<boolean>(false);
   const [contextMenuPoints, setContextMenuPoints] = useState<location>({
@@ -86,6 +88,7 @@ export default function Files({
               files={files}
               selectedFolder={selectedFolder}
               setFolders={setFolders}
+              setRenamePopup={setRenamePopup}
             />
           )}
         </div>
