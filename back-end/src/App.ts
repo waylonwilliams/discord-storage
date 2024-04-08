@@ -80,7 +80,8 @@ app.put("/upload", async (req: Request, res: Response) => {
 });
 
 app.post("/download", async (req: Request, res: Response) => {
-  const messageIDS = req.body.ids.split(",");
+  // const messageIDS = req.body.ids.split(",");
+  const messageIDS = JSON.parse(req.body.ids);
 
   const downloadPromises = messageIDS.map(async (id: string, index: number) => {
     await downloadFromDiscord(id, channelID, uploadedPath).catch((e) =>
