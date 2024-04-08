@@ -6,6 +6,7 @@ interface Props {
   selectedFolder: string;
   setSelectedFolder: (arg: string) => void;
   setFiles: (arg: fileListObject) => void;
+  setNewFolderPopup: (arg: boolean) => void;
 }
 
 export default function Folders({
@@ -14,6 +15,7 @@ export default function Folders({
   selectedFolder,
   setSelectedFolder,
   setFiles,
+  setNewFolderPopup,
 }: Props) {
   const onFolderChange = (folder: string) => {
     setSelectedFolder(folder);
@@ -63,7 +65,10 @@ export default function Folders({
       >
         Trash
       </div>
-      <div className="bg-gray-3 m-1 p-1 hover:bg-gray-4 rounded-sm hover:cursor-pointer">
+      <div
+        className="bg-gray-3 m-1 p-1 hover:bg-gray-4 rounded-sm hover:cursor-pointer"
+        onClick={() => setNewFolderPopup(true)}
+      >
         Create New Folder
       </div>
     </div>

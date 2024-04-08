@@ -2,7 +2,8 @@ import { useState } from "react";
 import { fileListObject } from "./Props.ts";
 import LeftColumn from "./LeftColumn.tsx";
 import RightColumn from "./RightColumn.tsx";
-import Popup from "./Popup.tsx";
+import Popup from "./RenamePopup.tsx";
+import NewFolderPopup from "./NewFolderPopup.tsx";
 
 function App() {
   if (localStorage.getItem("Home") === null) {
@@ -27,10 +28,16 @@ function App() {
   const [downloading, setDownloading] = useState<string[]>([]);
   const [rightClickedFile, setRightClickedFile] = useState<string>("");
   const [renamePopup, setRenamePopup] = useState<string>("");
+  const [newFolderPopup, setNewFolderPopup] = useState<boolean>(false);
 
   return (
     <>
-      <div className={"flex w-full" + (renamePopup !== "" ? " blur-sm" : "")}>
+      <div
+        className={
+          "flex w-full" +
+          (renamePopup !== "" || newFolderPopup ? " blur-sm" : "")
+        }
+      >
         <LeftColumn
           setFiles={setFiles}
           folders={folders}
@@ -42,6 +49,7 @@ function App() {
           uploading={uploading}
           setUploading={setUploading}
           files={files}
+          setNewFolderPopup={setNewFolderPopup}
         />
         <RightColumn
           files={files}
@@ -62,6 +70,14 @@ function App() {
           rightClickedFile={rightClickedFile}
           renamePopup={renamePopup}
           files={files}
+          setFiles={setFiles}
+          setFolders={setFolders}
+        />
+      )}
+      {newFolderPopup && (
+        <NewFolderPopup
+          setNewFolderPopup={setNewFolderPopup}
+          selectedFolder={selectedFolder}
           setFiles={setFiles}
           setFolders={setFolders}
         />

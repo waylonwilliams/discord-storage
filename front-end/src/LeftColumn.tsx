@@ -14,6 +14,7 @@ interface Props {
   downloading: string[];
   setDownloading: (arg: string[]) => void;
   files: fileListObject;
+  setNewFolderPopup: (arg: boolean) => void;
 }
 
 // default folders include home and trash
@@ -29,6 +30,7 @@ export default function LeftColumn({
   downloading,
   setDownloading,
   files,
+  setNewFolderPopup,
 }: Props) {
   return (
     <div className="flex-none w-1/6 relative bg-gray-1 min-h-screen text-center text-white">
@@ -47,6 +49,7 @@ export default function LeftColumn({
         selectedFolder={selectedFolder}
         setSelectedFolder={setSelectedFolder}
         setFiles={setFiles}
+        setNewFolderPopup={setNewFolderPopup}
       />
       <Queue
         downloading={downloading}
