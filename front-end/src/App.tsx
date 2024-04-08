@@ -62,7 +62,6 @@ function App() {
           rightClickedFile={rightClickedFile}
           renamePopup={renamePopup}
           files={files}
-          setRightClickedFile={setRightClickedFile}
           setFiles={setFiles}
           setFolders={setFolders}
         />

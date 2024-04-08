@@ -7,7 +7,6 @@ interface Props {
   selectedFolder: string;
   renamePopup: string;
   files: fileListObject;
-  setRightClickedFile: (arg: string) => void;
   setFiles: (arg: fileListObject) => void;
   setFolders: (arg: string[]) => void;
 }
@@ -18,7 +17,6 @@ export default function Popup({
   selectedFolder,
   renamePopup,
   files,
-  setRightClickedFile,
   setFiles,
   setFolders,
 }: Props) {
