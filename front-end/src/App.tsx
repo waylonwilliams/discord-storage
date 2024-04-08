@@ -53,6 +53,8 @@ function App() {
           setFiles={setFiles}
           downloading={downloading}
           setDownloading={setDownloading}
+          selectedFolder={selectedFolder}
+          setFolders={setFolders}
         />
       </div>
     </>

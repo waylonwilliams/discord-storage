@@ -25,5 +25,5 @@ export function updateFoldersFilesStates(
     }
   }
   setFolders(tempFoldersArr);
-  setFiles(ls[selectedFolder]);
+  setFiles(JSON.parse(ls[selectedFolder]));
 }

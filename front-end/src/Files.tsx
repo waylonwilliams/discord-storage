@@ -7,6 +7,8 @@ interface Props {
   setFiles: (arg: fileListObject) => void;
   downloading: string[];
   setDownloading: (arg: string[]) => void;
+  selectedFolder: string;
+  setFolders: (arg: string[]) => void;
 }
 
 export default function Files({
@@ -14,6 +16,8 @@ export default function Files({
   setFiles,
   downloading,
   setDownloading,
+  selectedFolder,
+  setFolders,
 }: Props) {
   const [rightClicked, setRightClicked] = useState<boolean>(false);
   const [contextMenuPoints, setContextMenuPoints] = useState<location>({
@@ -71,6 +75,9 @@ export default function Files({
             setFiles={setFiles}
             downloading={downloading}
             setDownloading={setDownloading}
+            files={files}
+            selectedFolder={selectedFolder}
+            setFolders={setFolders}
           />
         )}
       </div>

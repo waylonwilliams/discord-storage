@@ -1,12 +1,15 @@
-import { fileArrayElement } from "./Props";
+import { fileListObject, updateFoldersFilesStates } from "./Props";
 
 interface Props {
   x: number;
   y: number;
   rightClickedFile: string;
-  setFiles: (arg: fileArrayElement[]) => void;
+  setFiles: (arg: fileListObject) => void;
   downloading: string[];
   setDownloading: (arg: string[]) => void;
+  files: fileListObject;
+  selectedFolder: string;
+  setFolders: (arg: string[]) => void;
 }
 
 // when not clicking on a file, give the option to upload a file or create a folder
@@ -17,6 +20,9 @@ export default function ContextMenu({
   setFiles,
   downloading,
   setDownloading,
+  files,
+  selectedFolder,
+  setFolders,
 }: Props) {
   function onDownloadClick() {
     const newDownload = [...downloading, rightClickedFile];
@@ -28,7 +34,7 @@ export default function ContextMenu({
       },
       body: JSON.stringify({
         fileName: rightClickedFile,
-        ids: localStorage.getItem(rightClickedFile),
+        ids: files[rightClickedFile],
       }),
     })
       .then((response) => response.blob())
@@ -36,7 +42,7 @@ export default function ContextMenu({
         const url = window.URL.createObjectURL(data);
         const a = document.createElement("a");
         a.href = url;
-        a.download = rightClickedFile; // Fix file names, move the number to before the postfix
+        a.download = rightClickedFile;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -45,23 +51,17 @@ export default function ContextMenu({
           (item) => item !== rightClickedFile
         );
         setDownloading(newDownload);
-        // id like to make it prompt with a save as but maybe not, if file is slow to download ig it makes sense not to
       });
   }
 
   function onMoveClick() {}
 
   function onDeleteClick() {
-    localStorage.removeItem(rightClickedFile);
-    let tempFilesArr = [];
-    const ls = { ...localStorage }; // { file: csv of ids }
-    for (const key in ls) {
-      tempFilesArr.push({
-        file: key,
-        ids: ls[key],
-      });
-    }
-    setFiles(tempFilesArr);
+    let updatedFiles = files;
+    delete updatedFiles[rightClickedFile];
+    localStorage.setItem(selectedFolder, JSON.stringify(updatedFiles));
+
+    updateFoldersFilesStates(setFolders, setFiles, selectedFolder);
   }
 
   function onRenameClick() {}
