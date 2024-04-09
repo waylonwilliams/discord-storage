@@ -7,6 +7,7 @@ interface Props {
   setSelectedFolder: (arg: string) => void;
   setFiles: (arg: fileListObject) => void;
   setNewFolderPopup: (arg: boolean) => void;
+  setMoveFileBlur: (arg: boolean) => void;
 }
 
 export default function MoveFolders({
@@ -16,18 +17,12 @@ export default function MoveFolders({
   setSelectedFolder,
   setFiles,
   setNewFolderPopup,
+  setMoveFileBlur,
 }: Props) {
   return (
     <div className="cursor-default">
-      Move file
-      <div
-        className={
-          "m-1 p-1 rounded-sm hover:cursor-pointer" +
-          ("Home" === selectedFolder
-            ? " bg-purple-1 hover:bg-purple-2"
-            : " bg-gray-3 hover:bg-gray-4")
-        }
-      >
+      <div className="m-1 mb-5 p-1 rounded-sm bg-purple-1">Move file</div>
+      <div className="m-1 p-1 rounded-sm hover:cursor-pointer bg-gray-3 hover:bg-gray-4">
         Home
       </div>
       {folders.map((folder) => (
@@ -53,7 +48,10 @@ export default function MoveFolders({
       >
         Trash
       </div>
-      <div className="bg-gray-3 m-1 p-1 hover:bg-gray-4 rounded-sm hover:cursor-pointer">
+      <div
+        className="bg-gray-3 m-1 mt-5 p-1 hover:bg-red-600 rounded-sm hover:cursor-pointer"
+        onClick={() => setMoveFileBlur(false)}
+      >
         Cancel
       </div>
     </div>

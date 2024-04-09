@@ -58,6 +58,7 @@ export default function LeftColumn({
           setSelectedFolder={setSelectedFolder}
           setFiles={setFiles}
           setNewFolderPopup={setNewFolderPopup}
+          setMoveFileBlur={setMoveFileBlur}
         />
       ) : (
         <Folders

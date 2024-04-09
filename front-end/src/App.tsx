@@ -29,7 +29,7 @@ function App() {
   const [rightClickedFile, setRightClickedFile] = useState<string>("");
   const [renamePopup, setRenamePopup] = useState<string>("");
   const [newFolderPopup, setNewFolderPopup] = useState<boolean>(false);
-  const [moveFileBlur, setMoveFileBlur] = useState<boolean>(false);
+  const [moveFileBlur, setMoveFileBlur] = useState<boolean>(true);
 
   return (
     <>
