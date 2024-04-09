@@ -18,6 +18,7 @@ interface Props {
   setNewFolderPopup: (arg: boolean) => void;
   moveFileBlur: boolean;
   setMoveFileBlur: (arg: boolean) => void;
+  rightClickedFile: string;
 }
 
 // default folders include home and trash
@@ -36,6 +37,7 @@ export default function LeftColumn({
   setNewFolderPopup,
   moveFileBlur,
   setMoveFileBlur,
+  rightClickedFile,
 }: Props) {
   return (
     <div className="flex-none w-1/6 relative bg-gray-1 min-h-screen text-center text-white">
@@ -59,6 +61,8 @@ export default function LeftColumn({
           setFiles={setFiles}
           setNewFolderPopup={setNewFolderPopup}
           setMoveFileBlur={setMoveFileBlur}
+          files={files}
+          rightClickedFile={rightClickedFile}
         />
       ) : (
         <Folders

@@ -45,6 +45,7 @@ export default function RightColumn({
         rightClickedFile={rightClickedFile}
         setRightClickedFile={setRightClickedFile}
         setRenamePopup={setRenamePopup}
+        setMoveFileBlur={setMoveFileBlur}
       />
     </div>
   );

@@ -11,6 +11,7 @@ interface Props {
   selectedFolder: string;
   setFolders: (arg: string[]) => void;
   setRenamePopup: (arg: string) => void;
+  setMoveFileBlur: (arg: boolean) => void;
 }
 
 // when not clicking on a file, give the option to upload a file or create a folder
@@ -25,6 +26,7 @@ export default function ContextMenu({
   selectedFolder,
   setFolders,
   setRenamePopup,
+  setMoveFileBlur,
 }: Props) {
   function onDownloadClick() {
     const newDownload = [...downloading, rightClickedFile];
@@ -57,7 +59,9 @@ export default function ContextMenu({
       });
   }
 
-  function onMoveClick() {}
+  function onMoveClick() {
+    setMoveFileBlur(true);
+  }
 
   function onDeleteClick() {
     let updatedFiles = files;

@@ -29,14 +29,14 @@ function App() {
   const [rightClickedFile, setRightClickedFile] = useState<string>("");
   const [renamePopup, setRenamePopup] = useState<string>("");
   const [newFolderPopup, setNewFolderPopup] = useState<boolean>(false);
-  const [moveFileBlur, setMoveFileBlur] = useState<boolean>(true);
+  const [moveFileBlur, setMoveFileBlur] = useState<boolean>(false);
 
   return (
     <>
       <div
         className={
           "flex w-full" +
-          (renamePopup !== "" || newFolderPopup ? " blur-sm" : "")
+          (renamePopup !== "" || newFolderPopup ? " blur-sm shadow-none" : "")
         }
       >
         <LeftColumn
@@ -53,6 +53,7 @@ function App() {
           setNewFolderPopup={setNewFolderPopup}
           moveFileBlur={moveFileBlur}
           setMoveFileBlur={setMoveFileBlur}
+          rightClickedFile={rightClickedFile}
         />
         <RightColumn
           files={files}
