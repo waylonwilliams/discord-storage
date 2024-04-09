@@ -11,6 +11,8 @@ interface Props {
   rightClickedFile: string;
   setRightClickedFile: (arg: string) => void;
   setRenamePopup: (arg: string) => void;
+  moveFileBlur: boolean;
+  setMoveFileBlur: (arg: boolean) => void;
 }
 
 export default function RightColumn({
@@ -23,9 +25,16 @@ export default function RightColumn({
   rightClickedFile,
   setRightClickedFile,
   setRenamePopup,
+  moveFileBlur,
+  setMoveFileBlur,
 }: Props) {
   return (
-    <div className="flex-none w-5/6 bg-gray-2 min-h-screen">
+    <div
+      className={
+        "flex-none w-5/6 bg-gray-2 min-h-screen" +
+        (moveFileBlur ? " blur-sm" : "")
+      }
+    >
       <Files
         files={files}
         setFiles={setFiles}

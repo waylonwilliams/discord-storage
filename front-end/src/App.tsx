@@ -29,6 +29,7 @@ function App() {
   const [rightClickedFile, setRightClickedFile] = useState<string>("");
   const [renamePopup, setRenamePopup] = useState<string>("");
   const [newFolderPopup, setNewFolderPopup] = useState<boolean>(false);
+  const [moveFileBlur, setMoveFileBlur] = useState<boolean>(false);
 
   return (
     <>
@@ -50,6 +51,8 @@ function App() {
           setUploading={setUploading}
           files={files}
           setNewFolderPopup={setNewFolderPopup}
+          moveFileBlur={moveFileBlur}
+          setMoveFileBlur={setMoveFileBlur}
         />
         <RightColumn
           files={files}
@@ -61,6 +64,8 @@ function App() {
           rightClickedFile={rightClickedFile}
           setRightClickedFile={setRightClickedFile}
           setRenamePopup={setRenamePopup}
+          moveFileBlur={moveFileBlur}
+          setMoveFileBlur={setMoveFileBlur}
         />
       </div>
       {renamePopup !== "" && (
