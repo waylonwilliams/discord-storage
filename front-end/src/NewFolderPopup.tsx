@@ -35,9 +35,14 @@ export default function NewFolderPopup({
 
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <div className=" bg-purple-1 p-6 rounded-lg">
-        <div>New Folder</div>
-        <input type="text" value={newFolderName} onChange={updateInput} />{" "}
+      <div className="p-6 bg-gray-3 text-white border-2 border-gray-1 cursor-default rounded-md w-80">
+        <div className="m-2">New Folder</div>
+        <input
+          type="text"
+          value={newFolderName}
+          onChange={updateInput}
+          className="text-black w-full m-2"
+        />{" "}
         <br />
         {errorMessage}
         <div className="flex justify-end">
