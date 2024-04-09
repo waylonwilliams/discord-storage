@@ -4,9 +4,7 @@ interface Props {
   folders: string[];
   setFolders: (arg: string[]) => void;
   selectedFolder: string;
-  setSelectedFolder: (arg: string) => void;
   setFiles: (arg: fileListObject) => void;
-  setNewFolderPopup: (arg: boolean) => void;
   setMoveFileBlur: (arg: boolean) => void;
   files: fileListObject;
   rightClickedFile: string;
@@ -16,9 +14,7 @@ export default function MoveFolders({
   folders,
   setFolders,
   selectedFolder,
-  setSelectedFolder,
   setFiles,
-  setNewFolderPopup,
   setMoveFileBlur,
   rightClickedFile,
   files,
