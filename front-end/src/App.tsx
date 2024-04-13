@@ -13,7 +13,7 @@ function App() {
     localStorage.setItem("Trash", JSON.stringify({}));
   }
 
-  let tempFoldersArr = [];
+  const tempFoldersArr = [];
   const ls = { ...localStorage }; // { folder: { file : [ids, ids] }, folder: { file : [ids, ids] } }
   for (const folder in ls) {
     if (folder !== "Home" && folder !== "Trash") {

@@ -22,7 +22,7 @@ export default function Popup({
 }: Props) {
   const onConfirm = () => {
     if (renamePopup === "file") {
-      let newFiles = { ...files, [newFileName]: files[rightClickedFile] };
+      const newFiles = { ...files, [newFileName]: files[rightClickedFile] };
       delete newFiles[rightClickedFile];
       localStorage.setItem(selectedFolder, JSON.stringify(newFiles));
       updateFoldersFilesStates(setFolders, setFiles, selectedFolder);

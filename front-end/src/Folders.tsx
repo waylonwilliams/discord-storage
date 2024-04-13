@@ -2,7 +2,6 @@ import { fileListObject } from "./Props";
 
 interface Props {
   folders: string[];
-  setFolders: (arg: string[]) => void;
   selectedFolder: string;
   setSelectedFolder: (arg: string) => void;
   setFiles: (arg: fileListObject) => void;
@@ -11,7 +10,6 @@ interface Props {
 
 export default function Folders({
   folders,
-  setFolders,
   selectedFolder,
   setSelectedFolder,
   setFiles,

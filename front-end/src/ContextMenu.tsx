@@ -64,7 +64,7 @@ export default function ContextMenu({
   }
 
   function onDeleteClick() {
-    let updatedFiles = files;
+    const updatedFiles = files;
     if (selectedFolder !== "Trash") {
       const unparsedTrash = localStorage.getItem("Trash");
       if (unparsedTrash !== null) {

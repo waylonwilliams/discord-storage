@@ -63,7 +63,7 @@ export default function Button({
               fileName = fixName(fileName);
             } else {
               fileName = fileName.replace(/(\(\d+\))/, (match: string) => {
-                let number = parseInt(match.match(/\d+/)![0]) + 1;
+                const number = parseInt(match.match(/\d+/)![0]) + 1;
                 return `(${number})`;
               });
             }

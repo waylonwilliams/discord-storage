@@ -1,16 +1,9 @@
 interface Props {
   uploading: string[];
-  setUploading: (arg: string[]) => void;
   downloading: string[];
-  setDownloading: (arg: string[]) => void;
 }
 
-export default function Queue({
-  uploading,
-  setUploading,
-  downloading,
-  setDownloading,
-}: Props) {
+export default function Queue({ uploading, downloading }: Props) {
   return (
     <div className="absolute bottom-0 w-full cursor-default">
       {uploading.length > 0 && (

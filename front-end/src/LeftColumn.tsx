@@ -65,7 +65,6 @@ export default function LeftColumn({
       ) : (
         <Folders
           folders={folders}
-          setFolders={setFolders}
           selectedFolder={selectedFolder}
           setSelectedFolder={setSelectedFolder}
           setFiles={setFiles}
@@ -73,12 +72,7 @@ export default function LeftColumn({
         />
       )}
       <div className={moveFileBlur ? "blur-sm" : ""}>
-        <Queue
-          downloading={downloading}
-          setDownloading={setDownloading}
-          uploading={uploading}
-          setUploading={setUploading}
-        />
+        <Queue downloading={downloading} uploading={uploading} />
       </div>
     </div>
   );

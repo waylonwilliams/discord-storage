@@ -23,13 +23,13 @@ export default function MoveFolders({
     if (folder == selectedFolder) {
       setMoveFileBlur(false);
     } else {
-      let oldFolder = { ...files };
+      const oldFolder = { ...files };
       const movedIDS = files[rightClickedFile];
       delete oldFolder[rightClickedFile];
       localStorage.setItem(selectedFolder, JSON.stringify(oldFolder));
       const newFolderUnparsed = localStorage.getItem(folder);
       if (newFolderUnparsed !== null) {
-        let newFolder = JSON.parse(newFolderUnparsed);
+        const newFolder = JSON.parse(newFolderUnparsed);
         newFolder[rightClickedFile] = movedIDS;
         localStorage.setItem(folder, JSON.stringify(newFolder));
 
