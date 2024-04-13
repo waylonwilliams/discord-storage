@@ -13,7 +13,6 @@ interface Props {
   uploading: string[];
   setUploading: (arg: string[]) => void;
   downloading: string[];
-  setDownloading: (arg: string[]) => void;
   files: fileListObject;
   setNewFolderPopup: (arg: boolean) => void;
   moveFileBlur: boolean;
@@ -32,7 +31,6 @@ export default function LeftColumn({
   uploading,
   setUploading,
   downloading,
-  setDownloading,
   files,
   setNewFolderPopup,
   moveFileBlur,

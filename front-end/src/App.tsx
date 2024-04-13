@@ -46,7 +46,6 @@ function App() {
           selectedFolder={selectedFolder}
           setSelectedFolder={setSelectedFolder}
           downloading={downloading}
-          setDownloading={setDownloading}
           uploading={uploading}
           setUploading={setUploading}
           files={files}
