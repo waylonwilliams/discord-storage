@@ -8,12 +8,12 @@ Google Drive's storage seems free until it isn't. Storage costs money but I want
 
 ## Features
 
-- Upload files to be stored on Discord
-- Files are encrypted
-- Capacity for large files by splicing
-- Download files stored on Discord
-- File system with folders, rename & move capabilities, archival trash folder, etc
-- Simeoultaneous uploads and downloads
+- **File Upload:** Upload files for storage on Discord.
+- **Encryption:** All files are encrypted for security.
+- **Large File Support:** Large files are handled by splitting them into smaller chunks.
+- **File Download:** Download your stored files from Discord.
+- **File Management:** Includes a file system with folder support, file renaming, moving capabilities, an archival trash folder, and more.
+- **Simultaneous Uploads and Downloads:** The system supports simultaneous file uploads and downloads.
 
 ## How to run
 
