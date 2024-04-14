@@ -30,9 +30,17 @@ npm i
 npm run dev
 ```
 
-// Setting up bot and channel id
+In a new terminal, navigate to the back-end repo and set up your environment variables
 
-In a new terminal, navigate to the back-end repo and run
+```
+export TOKEN="your_bot_token"
+export CHANNEL_ID="your_channel_id"
+export SECRET_KEY="your_encryption_key"
+```
+
+Where `TOKEN` is your Discord bot's token, `CHANNEL_ID` is the Discord channel where you want your files to be stored, and `SECRET_KEY` is a random secret key used to encrypt your files.
+
+Then run
 
 ```
 docker build -t discord-storage .
