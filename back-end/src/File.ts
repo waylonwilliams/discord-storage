@@ -1,6 +1,8 @@
 import * as path from "path";
 import * as fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import { algorithm, secretKey } from "./Login";
+import crypto from "crypto";
 
 export async function spliceFiles(
   filePath: string,
@@ -17,7 +19,6 @@ export async function spliceFiles(
         return;
       }
       for (let i = 0; i < fileSize; i += 25690112) {
-        // const curPath: string = path.join(uploadedPath, i.toString());
         const curPath: string = path.join(uploadedPath, uuidv4());
         await writeFilePromise(curPath, data, i);
         splicedFilePaths.push(curPath);
@@ -31,7 +32,13 @@ export async function spliceFiles(
 
 async function writeFilePromise(curPath: string, data: Buffer, index: number) {
   return new Promise<void>((resolve, reject) => {
-    fs.writeFile(curPath, data.slice(index, index + 25690112), (err) => {
+    const cipher = crypto.createCipher(algorithm, secretKey);
+    const encryptedData = Buffer.concat([
+      cipher.update(data.slice(index, index + 25690112)),
+      cipher.final(),
+    ]);
+
+    fs.writeFile(curPath, encryptedData, (err) => {
       // slice is deprecated?
       if (err) {
         console.error("Error splicing file:", err);
@@ -59,10 +66,6 @@ export async function combineFiles(fileName: string, uploadedPath: string) {
   for (const f of fileNames) {
     await readIntoAppend(f, writePath);
   }
-  // const appendPromises = fileNames.map(async (fileName: string) => {
-  //   await readIntoAppend(fileName, writePath);
-  // });
-  // await Promise.all(appendPromises);
 
   return fileNames;
 }
@@ -111,7 +114,13 @@ async function createEmptyFile(filePath: string) {
 
 async function appendFilePromise(destinationPath: string, data: Buffer) {
   return new Promise<void>((resolve, reject) => {
-    fs.appendFile(destinationPath, data, { encoding: null }, (err) => {
+    const decipher = crypto.createDecipher(algorithm, secretKey);
+    const decryptedData = Buffer.concat([
+      decipher.update(data),
+      decipher.final(),
+    ]);
+
+    fs.appendFile(destinationPath, decryptedData, { encoding: null }, (err) => {
       if (err) {
         console.error("Error appending file", err);
         reject(err);
