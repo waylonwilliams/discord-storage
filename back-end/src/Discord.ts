@@ -1,8 +1,11 @@
 import { Attachment, Message, TextChannel } from "discord.js";
-import { token } from "./Login";
 import { createWriteStream } from "fs";
 import path from "path";
 import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
+const token = process.env.TOKEN;
 
 export async function uploadToDiscord(
   attachmentPath: string,

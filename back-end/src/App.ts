@@ -4,10 +4,12 @@ import fileUpload, { FileArray, UploadedFile } from "express-fileupload";
 import * as path from "path";
 import { Client, Message, TextChannel } from "discord.js";
 import * as fs from "fs";
-import { channelID, token } from "./Login";
 import { spliceFiles, combineFiles } from "./File";
 import { downloadFromDiscord, uploadToDiscord } from "./Discord";
 import livereload from "connect-livereload";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const uploadedPath = path.join(__dirname, "../uploaded");
 const app = express();
@@ -21,7 +23,7 @@ app.use(livereload({ ignore: [".pdf"] }));
 const client = new Client({
   intents: [],
 });
-client.login(token);
+client.login(process.env.TOKEN);
 client.on("ready", () => {
   console.log(`Logged in as ${client.user?.tag}`);
 });
@@ -42,7 +44,12 @@ app.put("/upload", async (req: Request, res: Response) => {
     );
 
     // upload to discord
-    const channel = (await client.channels.fetch(channelID)) as TextChannel;
+    let channel: TextChannel | undefined;
+    if (process.env.CHANNEL_ID !== undefined) {
+      channel = (await client.channels.fetch(
+        process.env.CHANNEL_ID
+      )) as TextChannel;
+    }
     if (!channel) {
       return res.status(500).json({ message: "Invalid channel ID" });
     }
@@ -83,34 +90,38 @@ app.post("/download", async (req: Request, res: Response) => {
   // const messageIDS = req.body.ids.split(",");
   const messageIDS = JSON.parse(req.body.ids);
 
-  const downloadPromises = messageIDS.map(async (id: string, index: number) => {
-    await downloadFromDiscord(id, channelID, uploadedPath).catch((e) =>
-      console.error("Error with my discord download function", e)
+  const channelID = process.env.CHANNEL_ID;
+  if (channelID !== undefined) {
+    const downloadPromises = messageIDS.map(
+      async (id: string, index: number) =>
+        await downloadFromDiscord(id, channelID, uploadedPath).catch((e) =>
+          console.error("Error with my discord download function", e)
+        )
     );
-  });
-  await Promise.all(downloadPromises);
-  console.log("All downloaded", downloadPromises.length);
+    await Promise.all(downloadPromises);
+    console.log("All downloaded", downloadPromises.length);
 
-  const removeFiles: string[] = await combineFiles("return", uploadedPath);
+    const removeFiles: string[] = await combineFiles("return", uploadedPath);
 
-  res.status(200).sendFile(path.join(uploadedPath, "return"), (err) => {
-    if (err) {
-      console.error("Error sending file to frontend", err);
-    } else {
-      for (const f of removeFiles) {
-        fs.unlink(f, (e) => {
+    res.status(200).sendFile(path.join(uploadedPath, "return"), (err) => {
+      if (err) {
+        console.error("Error sending file to frontend", err);
+      } else {
+        for (const f of removeFiles) {
+          fs.unlink(f, (e) => {
+            if (e) {
+              console.error("Error deleting main file", e);
+            }
+          });
+        }
+        fs.unlink(path.join(uploadedPath, "return"), (e) => {
           if (e) {
             console.error("Error deleting main file", e);
           }
         });
       }
-      fs.unlink(path.join(uploadedPath, "return"), (e) => {
-        if (e) {
-          console.error("Error deleting main file", e);
-        }
-      });
-    }
-  });
+    });
+  }
 });
 
 app.listen(5000, () => {
