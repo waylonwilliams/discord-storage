@@ -1,6 +1,8 @@
 # Discord Storage
 
-video here
+
+https://github.com/waylonwilliams/discord-storage/assets/145303505/ae9ec215-1f81-4f13-897d-40ce22ee5c4d
+
 
 ## Motivation
 
