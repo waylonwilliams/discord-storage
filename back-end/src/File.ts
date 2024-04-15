@@ -21,6 +21,7 @@ export async function spliceFiles(
       }
       for (let i = 0; i < fileSize; i += 25690112) {
         const curPath: string = path.join(uploadedPath, uuidv4());
+        console.log(curPath);
         await writeFilePromise(curPath, data, i);
         splicedFilePaths.push(curPath);
         if (i + 25690112 > fileSize) {
@@ -33,24 +34,21 @@ export async function spliceFiles(
 
 async function writeFilePromise(curPath: string, data: Buffer, index: number) {
   return new Promise<void>((resolve, reject) => {
-    let cipher;
-    let encryptedData;
-    if (process.env.SECRET_KEY !== undefined) {
-      cipher = crypto.createCipher("aes-256-ctr", process.env.SECRET_KEY);
-      encryptedData = Buffer.concat([
-        cipher.update(data.slice(index, index + 25690112)),
-        cipher.final(),
-      ]);
-    } else {
-      cipher = crypto.createCipher(
-        "aes-256-ctr",
-        "vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3" // for when the user hasn't set their own key
-      );
-      encryptedData = Buffer.concat([
-        cipher.update(data.slice(index, index + 25690112)),
-        cipher.final(),
-      ]);
-    }
+    const cipher = crypto.createCipheriv(
+      "aes-256-ctr",
+      crypto
+        .createHash("sha256")
+        .update(
+          String(process.env.SECRET_KEY || "vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3")
+        )
+        .digest("base64")
+        .slice(0, 32),
+      Buffer.alloc(16, 0)
+    );
+    const encryptedData = Buffer.concat([
+      cipher.update(data.slice(index, index + 25690112)),
+      cipher.final(),
+    ]);
 
     fs.writeFile(curPath, encryptedData, (err) => {
       // slice is deprecated?
@@ -69,6 +67,8 @@ export async function combineFiles(fileName: string, uploadedPath: string) {
   let fileNames: string[] = [];
   while (await checkFileExists(path.join(uploadedPath, numFiles.toString()))) {
     fileNames.push(path.join(uploadedPath, numFiles.toString()));
+    // if I could somehow make the discord name more unique, like 1fileName, 2fileName, etc
+    // then I could use numFiles + fileName to still keep them in order?
     numFiles++;
   }
   console.log("Number of files:", numFiles, fileNames);
@@ -128,18 +128,21 @@ async function createEmptyFile(filePath: string) {
 
 async function appendFilePromise(destinationPath: string, data: Buffer) {
   return new Promise<void>((resolve, reject) => {
-    let decipher;
-    let decryptedData;
-    if (process.env.SECRET_KEY !== undefined) {
-      decipher = crypto.createDecipher("aes-256-ctr", process.env.SECRET_KEY);
-      decryptedData = Buffer.concat([decipher.update(data), decipher.final()]);
-    } else {
-      decipher = crypto.createDecipher(
-        "aes-256-ctr",
-        "vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3"
-      );
-      decryptedData = Buffer.concat([decipher.update(data), decipher.final()]);
-    }
+    const decipher = crypto.createDecipheriv(
+      "aes-256-ctr",
+      crypto
+        .createHash("sha256")
+        .update(
+          String(process.env.SECRET_KEY || "vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3")
+        )
+        .digest("base64")
+        .slice(0, 32),
+      Buffer.alloc(16, 0)
+    );
+    const decryptedData = Buffer.concat([
+      decipher.update(data),
+      decipher.final(),
+    ]);
 
     fs.appendFile(destinationPath, decryptedData, { encoding: null }, (err) => {
       if (err) {

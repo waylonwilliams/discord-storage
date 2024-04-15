@@ -47,6 +47,7 @@ export default function Button({
       formData.set("file", event.target.files[0]); // by accessing index 0 i think this means only the first selected file would be uploaded
       const newUpload = [...uploading, event.target.files[0].name];
       setUploading(newUpload);
+      const localFolder = selectedFolder.split("").join(""); // make a local copy of the current state value
       // upload file to backend
       fetch("http://localhost:5000/upload", {
         method: "PUT",
@@ -57,8 +58,14 @@ export default function Button({
           let fileName = data.fileName;
           const newUpload = uploading.filter((item) => item !== fileName);
           setUploading(newUpload);
+          const localFiles = localStorage.getItem(localFolder);
+          if (localFiles === null) {
+            console.error("localFiles is null");
+            return;
+          }
+          const parsedLocalFiles = JSON.parse(localFiles);
           // change file name if there are duplicates
-          for (let i = 1; files[fileName] != undefined; i++) {
+          for (let i = 1; parsedLocalFiles[fileName] != undefined; i++) {
             if (i == 1) {
               fileName = fixName(fileName);
             } else {
@@ -69,10 +76,11 @@ export default function Button({
             }
           }
           // add fileName to currentFolders list of files
-          const updatedFiles = { ...files, [fileName]: data.messageIDs };
+          const updatedFiles = {
+            ...parsedLocalFiles,
+            [fileName]: data.messageIDs,
+          };
           localStorage.setItem(selectedFolder, JSON.stringify(updatedFiles));
-
-          // localStorage.setItem(fileName, data.messageIDs);
 
           updateFoldersFilesStates(setFolders, setFiles, selectedFolder);
         });
