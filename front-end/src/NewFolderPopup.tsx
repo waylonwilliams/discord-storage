@@ -35,25 +35,26 @@ export default function NewFolderPopup({
 
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <div className="p-6 bg-gray-3 text-white border-2 border-gray-1 cursor-default rounded-md w-80">
-        <div className="m-2">New Folder</div>
+      <div className="bg-gray-3 p-6 absolute text-white border-2 border-gray-1 cursor-default rounded-md">
+        <div className="m-1">New Folder</div>
         <input
           type="text"
           value={newFolderName}
           onChange={updateInput}
-          className="text-black w-full m-2"
+          className="text-black m-1 p-1 outline-none rounded-md"
+          spellCheck="false"
         />{" "}
         <br />
         {errorMessage}
-        <div className="flex justify-end">
+        <div className="flex justify-end m-1">
           <button
-            className="bg-purple-2 rounded-lg p-1 m-2"
+            className="bg-purple-2 rounded-lg p-1 m-2 hover:bg-purple-1"
             onClick={() => setNewFolderPopup(false)}
           >
             Cancel
           </button>
           <button
-            className="bg-purple-2 rounded-lg p-1 m-2"
+            className="bg-purple-2 rounded-lg p-1 m-2 hover:bg-purple-1"
             onClick={onConfirm}
           >
             Confirm

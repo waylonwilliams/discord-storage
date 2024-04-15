@@ -39,18 +39,25 @@ export default function Popup({
 
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <div className=" bg-purple-1 p-6 rounded-lg">
-        <div>Rename</div>
-        <input type="text" value={newFileName} onChange={updateInput} /> <br />
-        <div className="flex justify-end">
+      <div className="bg-gray-3 p-6 absolute text-white border-2 border-gray-1 cursor-default rounded-md">
+        <div className="m-1">Rename</div>
+        <input
+          type="text"
+          className="text-black m-1 p-1 outline-none rounded-md"
+          value={newFileName}
+          onChange={updateInput}
+          spellCheck="false"
+        />{" "}
+        <br />
+        <div className="flex justify-end m-1">
           <button
-            className="bg-purple-2 rounded-lg p-1 m-2"
+            className="bg-purple-2 rounded-lg p-1 m-2 hover:bg-purple-1"
             onClick={() => setRenamePopup("")}
           >
             Cancel
           </button>
           <button
-            className="bg-purple-2 rounded-lg p-1 m-2"
+            className="bg-purple-2 rounded-lg p-1 m-2 hover:bg-purple-1"
             onClick={onConfirm}
           >
             Confirm
