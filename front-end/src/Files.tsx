@@ -45,8 +45,8 @@ export default function Files({
   return (
     <>
       {Object.keys(files).length == 0 ? (
-        <div className="flex justify-center items-center h-screen">
-          <img src="assets/cat.png" className=" max-w-xs max-h-xs" />
+        <div className="flex justify-center items-center h-screen text-gray-1">
+          Nothing to see here...
         </div>
       ) : (
         <div className="grid grid-cols-6 m-2 cursor-default">
