@@ -45,7 +45,6 @@ export default function LeftColumn({
           setFiles={setFiles}
           uploading={uploading}
           setUploading={setUploading}
-          files={files}
           setFolders={setFolders}
           selectedFolder={selectedFolder}
         />

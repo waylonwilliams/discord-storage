@@ -14,6 +14,8 @@ interface Props {
   setMoveFileBlur: (arg: boolean) => void;
 }
 
+let localDownload: string[] = [];
+
 // when not clicking on a file, give the option to upload a file or create a folder
 export default function ContextMenu({
   x,
@@ -31,6 +33,7 @@ export default function ContextMenu({
   function onDownloadClick() {
     const newDownload = [...downloading, rightClickedFile];
     setDownloading(newDownload);
+    localDownload.push(rightClickedFile);
     fetch("http://localhost:5000/download", {
       method: "POST",
       headers: {
@@ -51,10 +54,13 @@ export default function ContextMenu({
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
-        const newDownload = downloading.filter(
+        // const newDownload = downloading.filter(
+        //   (item) => item !== rightClickedFile
+        // );
+        localDownload = localDownload.filter(
           (item) => item !== rightClickedFile
         );
-        setDownloading(newDownload);
+        setDownloading(localDownload);
       });
   }
 

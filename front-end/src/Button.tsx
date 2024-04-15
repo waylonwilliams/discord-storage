@@ -5,7 +5,6 @@ interface Props {
   setFiles: (val: fileListObject) => void;
   uploading: string[];
   setUploading: (arg: string[]) => void;
-  files: fileListObject;
   setFolders: (arg: string[]) => void;
   selectedFolder: string;
 }
@@ -26,16 +25,12 @@ function fixName(file: string) {
   return x;
 }
 
-// const Button: React.FC<Props> = ({
-//   setFiles,
-//   uploading,
-//   setUploading,
-// }: Props) => {
+let localUpload: string[] = [];
+
 export default function Button({
   setFiles,
   uploading,
   setUploading,
-  files,
   setFolders,
   selectedFolder,
 }: Props) {
@@ -46,6 +41,7 @@ export default function Button({
       const formData = new FormData();
       formData.set("file", event.target.files[0]); // by accessing index 0 i think this means only the first selected file would be uploaded
       const newUpload = [...uploading, event.target.files[0].name];
+      localUpload.push(event.target.files[0].name);
       setUploading(newUpload);
       const localFolder = selectedFolder.split("").join(""); // make a local copy of the current state value
       // upload file to backend
@@ -56,8 +52,9 @@ export default function Button({
         .then((response) => response.json())
         .then((data) => {
           let fileName = data.fileName;
-          const newUpload = uploading.filter((item) => item !== fileName);
-          setUploading(newUpload);
+          // const newUpload = uploading.filter((item) => item !== fileName);
+          localUpload = localUpload.filter((item) => item !== fileName);
+          setUploading(localUpload);
           const localFiles = localStorage.getItem(localFolder);
           if (localFiles === null) {
             console.error("localFiles is null");
