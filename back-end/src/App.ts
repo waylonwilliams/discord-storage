@@ -7,6 +7,7 @@ import * as fs from "fs";
 import { spliceFiles, combineFiles } from "./File";
 import { downloadFromDiscord, uploadToDiscord } from "./Discord";
 import livereload from "connect-livereload";
+import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -55,8 +56,9 @@ app.put("/upload", async (req: Request, res: Response) => {
     }
 
     let messageData: string[] = [];
+    const fileID = uuidv4();
     const uploadPromises = splicedFilePaths.map(async (p, index) => {
-      await uploadToDiscord(p, index.toString(), channel)
+      await uploadToDiscord(p, index.toString() + fileID, channel, fileID)
         .then((messageInfo) => {
           if (messageInfo != null) {
             messageData.push(messageInfo);
@@ -81,7 +83,6 @@ app.put("/upload", async (req: Request, res: Response) => {
         console.error("Error deleting main file", e);
       }
     });
-    console.log("Uploaded and sending response");
     res.status(200).json({ messageIDs: messageData, fileName: file.name });
   }
 });
@@ -91,17 +92,22 @@ app.post("/download", async (req: Request, res: Response) => {
   const messageIDS = JSON.parse(req.body.ids);
 
   const channelID = process.env.CHANNEL_ID;
+  let fileID: string | void = "";
   if (channelID !== undefined) {
     const downloadPromises = messageIDS.map(
-      async (id: string, index: number) =>
-        await downloadFromDiscord(id, channelID, uploadedPath).catch((e) =>
-          console.error("Error with my discord download function", e)
-        )
+      async (id: string, index: number) => {
+        fileID = await downloadFromDiscord(id, channelID, uploadedPath).catch(
+          (e) => console.error("Error with my discord download function", e)
+        );
+      }
     );
     await Promise.all(downloadPromises);
-    console.log("All downloaded", downloadPromises.length);
 
-    const removeFiles: string[] = await combineFiles("return", uploadedPath);
+    const removeFiles: string[] = await combineFiles(
+      "return",
+      uploadedPath,
+      fileID
+    );
 
     res.status(200).sendFile(path.join(uploadedPath, "return"), (err) => {
       if (err) {

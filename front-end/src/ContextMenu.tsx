@@ -31,7 +31,6 @@ export default function ContextMenu({
   function onDownloadClick() {
     const newDownload = [...downloading, rightClickedFile];
     setDownloading(newDownload);
-    console.log(JSON.stringify(files[rightClickedFile]));
     fetch("http://localhost:5000/download", {
       method: "POST",
       headers: {

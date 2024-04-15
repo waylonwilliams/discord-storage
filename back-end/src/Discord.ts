@@ -10,10 +10,12 @@ const token = process.env.TOKEN;
 export async function uploadToDiscord(
   attachmentPath: string,
   fileName: string, // should include the postfix index
-  channel: TextChannel
+  channel: TextChannel,
+  fileID: string
 ) {
   return new Promise<string | undefined>(async (resolve, reject) => {
     const attachment = {
+      content: fileID,
       files: [
         {
           attachment: attachmentPath,
@@ -41,7 +43,7 @@ export async function downloadFromDiscord(
   channelID: string,
   uploadedPath: string
 ) {
-  return new Promise<void>(async (resolve, reject) => {
+  return new Promise<string>(async (resolve, reject) => {
     const response = await fetch(
       `https://discord.com/api/v10/channels/${channelID}/messages/${messageID}`,
       {
@@ -77,8 +79,7 @@ export async function downloadFromDiscord(
                 response.data.pipe(writer);
 
                 writer.on("finish", () => {
-                  console.log("File downloaded successfully");
-                  resolve();
+                  resolve(message.content);
                   return;
                 });
               } catch (e) {

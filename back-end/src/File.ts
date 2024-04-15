@@ -21,7 +21,6 @@ export async function spliceFiles(
       }
       for (let i = 0; i < fileSize; i += 25690112) {
         const curPath: string = path.join(uploadedPath, uuidv4());
-        console.log(curPath);
         await writeFilePromise(curPath, data, i);
         splicedFilePaths.push(curPath);
         if (i + 25690112 > fileSize) {
@@ -62,16 +61,19 @@ async function writeFilePromise(curPath: string, data: Buffer, index: number) {
   });
 }
 
-export async function combineFiles(fileName: string, uploadedPath: string) {
+export async function combineFiles(
+  fileName: string,
+  uploadedPath: string,
+  fileID: string
+) {
   let numFiles = 0;
   let fileNames: string[] = [];
-  while (await checkFileExists(path.join(uploadedPath, numFiles.toString()))) {
-    fileNames.push(path.join(uploadedPath, numFiles.toString()));
-    // if I could somehow make the discord name more unique, like 1fileName, 2fileName, etc
-    // then I could use numFiles + fileName to still keep them in order?
+  while (
+    await checkFileExists(path.join(uploadedPath, numFiles.toString() + fileID))
+  ) {
+    fileNames.push(path.join(uploadedPath, numFiles.toString() + fileID));
     numFiles++;
   }
-  console.log("Number of files:", numFiles, fileNames);
 
   // make sure appending will go smooth
   const writePath = path.join(uploadedPath, fileName);
@@ -104,7 +106,6 @@ async function readIntoAppend(sourcePath: string, destinationPath: string) {
         reject(err);
         return;
       }
-      console.log("Reading file");
 
       await appendFilePromise(destinationPath, data);
       resolve();
@@ -120,7 +121,6 @@ async function createEmptyFile(filePath: string) {
         reject(err);
         return;
       }
-      console.log("Empty file created");
       resolve();
     });
   });
@@ -150,7 +150,6 @@ async function appendFilePromise(destinationPath: string, data: Buffer) {
         reject(err);
         return;
       }
-      console.log("Appended buffer");
       resolve();
     });
   });
